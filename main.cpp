@@ -8,7 +8,8 @@
 color<double> ray_color(ray<double>& r, hittable& obj){
     hit_record res; 
     if(obj.hit(r, 0, infinity, res)){
-        return 0.5*color<double>(res.normal.x()+1, res.normal.y()+1, res.normal.z()+1); // map to R,G,B ⊂ (0,1)
+        // return 0.5*color<double>(res.normal.x()+1, res.normal.y()+1, res.normal.z()+1); // map to R,G,B ⊂ (0,1)
+        return 0.5 * (res.normal + color<double>(1,1,1));
     }
     vec3<double> unit_direction = unit_vector(r.direction()); 
     auto a = 0.5*(unit_direction.y()+1.0); 
@@ -55,6 +56,7 @@ int main() {
             ray r(camera_center, ray_direction);
 
             Sphere sph(point3<double>(0,0,-1), 0.5); 
+            // Sphere sph(point3<double>(0,-100.5,-1), 100);
 
             color<double> pixel_color = ray_color(r, sph);
             write_color(std::cout, pixel_color);
