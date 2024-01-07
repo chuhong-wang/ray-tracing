@@ -4,13 +4,12 @@
 #include "color.h"
 #include "ray.h"
 #include "sphere.h"
+#include "hittable_list.h"
 
-color<double> ray_color(ray<double>& r, Sphere& obj){
+color<double> ray_color(ray<double>& r, hittable& obj){
     hit_record res; 
     if(obj.hit(r, 0, infinity, res)){
-        // return 0.5*color<double>(res.normal.x()+1, res.normal.y()+1, res.normal.z()+1); // map to R,G,B ⊂ (0,1)
-        auto normal = (r.at(res.t) - obj.get_center()) / obj.get_radius(); 
-        return 0.5 * (normal + color<double>(1,1,1));
+        return 0.5 * (res.normal + color<double>(1,1,1));
     }
     vec3<double> unit_direction = unit_vector(r.direction()); 
     auto a = 0.5*(unit_direction.y()+1.0); 
@@ -56,10 +55,16 @@ int main() {
             auto ray_direction = pixel_center - camera_center;
             ray r(camera_center, ray_direction);
 
-            Sphere sph(point3<double>(0,0,-1), 0.5); 
-            // Sphere sph(point3<double>(0,-100.5,-1), 100);
+            Hittable_list hittable_list; 
+            auto ptr1 = std::make_shared<Sphere>(point3<double>(0,0,-1), 0.5); 
+            auto ptr2 = std::make_shared<Sphere>(point3<double>(0,-100.5,-1), 100); 
+            hittable_list.add(ptr1); 
+            hittable_list.add(ptr2); 
 
-            color<double> pixel_color = ray_color(r, sph);
+            // Sphere sph(point3<double>(0,0,-1), 0.5); 
+            // // Sphere sph(point3<double>(0,-100.5,-1), 100);
+
+            color<double> pixel_color = ray_color(r, hittable_list);
             write_color(std::cout, pixel_color);
 
         }

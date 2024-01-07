@@ -10,7 +10,7 @@ class hit_record {
         bool front_face;
 
         void set_face_normal(ray<double>& r_, const vec3<double>& outward_normal){
-            front_face = (dot_product(r_.direction(), outward_normal)>=0.0); 
+            front_face = (dot_product(r_.direction(), outward_normal)<=0.0); 
             normal = front_face?outward_normal:-outward_normal; 
         }
 };
