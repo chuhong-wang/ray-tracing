@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build",
+  "command": "/usr/bin/clang++  -I\"/Users/chuhongwang/My Drive/learn_something/c++/raytracing/include\" -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk -o CMakeFiles/Main.dir/main.cpp.o -c \"/Users/chuhongwang/My Drive/learn_something/c++/raytracing/main.cpp\"",
+  "file": "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/main.cpp",
+  "output": "CMakeFiles/Main.dir/main.cpp.o"
+},
+{
+  "directory": "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build/src",
+  "command": "/usr/bin/clang++  -I\"/Users/chuhongwang/My Drive/learn_something/c++/raytracing/include\" -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk -o CMakeFiles/src.dir/vec3.cpp.o -c \"/Users/chuhongwang/My Drive/learn_something/c++/raytracing/src/vec3.cpp\"",
+  "file": "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/src/vec3.cpp",
+  "output": "src/CMakeFiles/src.dir/vec3.cpp.o"
+}
+]

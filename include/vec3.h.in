@@ -1,0 +1,41 @@
+#pragma once
+#include <cmath>
+#include <iostream>
+
+template <typename T>
+class vec3 {
+    private: 
+        // data member
+        T v[3];
+
+    public:
+        // constructor 
+        vec3() {v[0] = 0; v[1] = 0; v[2] = 0; }
+        vec3(T v0, T v1, T v2) { v[0] = v0; v[1] = v1; v[2] = v2; }
+
+        // member functions 
+        T x() const {return v[0];} // use const since the function doesn't alter the state of the object
+        T y() const {return v[1];}
+        T z() const {return v[2];}
+        T length(); 
+        T length_square(); 
+
+        // operator overloading
+        vec3 operator+() {return *this;}
+        vec3 operator-() {return vec3(-v[0], -v[1], -v[2]); }
+        T operator[](int i) {return v[i]; }
+        void operator+=(vec3& v2) {v[0]+= v2[0]; v[1]+= v2[1]; v[2]+= v2[2];}
+        void operator+=(const T m) {v[0]+=m; v[1]+= m; v[2]+= m; }
+        // void operator-=(vec3& v2) {v[0]-= v2[0]; v[1]-= v2[1]; v[2]-= v2[2];}
+        // void operator-=(const T m) {this+= -m; } 
+        // void operator*=(vec3& v2) {v[0]*= v2[0]; v[1]*= v2[1]; v[2]*= v2[2];}
+        // void operator*=(const T m) {v[0]*= m; v[1]*= m; v[2]*= m; }
+};
+
+// TODO: declare the << overloading here and move it definition to
+// vec3.cpp leads to linker error. 
+template <typename T>
+std::ostream& operator<<(std::ostream& os,  const vec3<T>& v) {
+    os << v.x() << " " << v.y() << " " << v.z() << '\n';  
+    return os; 
+} 

@@ -1,0 +1,6 @@
+/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build/CMakeFiles/Main.dir
+/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build/CMakeFiles/edit_cache.dir
+/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build/CMakeFiles/rebuild_cache.dir
+/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build/src/CMakeFiles/src.dir
+/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build/src/CMakeFiles/edit_cache.dir
+/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build/src/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,23 @@
+#include "vec3.h"
+#include <iostream>
+
+template <typename T>
+T vec3<T>::length()
+    {return std::sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]); }
+
+template <typename T>
+T vec3<T>::length_square() {return v[0]*v[0] + v[1]*v[1] + v[2]*v[2]; }
+
+// template <typename T>
+// std::ostream& operator<<(std::ostream& os,  vec3<T>& v) {
+//     os << v.x() << " " << v.y() << " " << v.z() << '\n';  
+//     return os; 
+// }
+
+template <typename T>
+vec3<T> operator+(vec3<T>& u, const vec3<T>& v) {
+    u += v; 
+    return u;  
+}
+
+template class vec3<double>; // TODO: where is it supposed to be?  
