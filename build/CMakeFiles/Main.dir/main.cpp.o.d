@@ -1,5 +1,5 @@
 CMakeFiles/Main.dir/main.cpp.o: \
-  /Users/chuhongwang/My\ Drive/learn_something/c++/raytracing/main.cpp \
+  /Users/chuhongwang/My\ Drive/learn_something/c++/ray-tracing/main.cpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/c++/v1/iostream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/c++/v1/__assert \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/c++/v1/__config \
@@ -791,10 +791,10 @@ CMakeFiles/Main.dir/main.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/_types/_nl_item.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/c++/v1/__bsd_locale_defaults.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/c++/v1/cstdarg \
-  /Users/chuhongwang/My\ Drive/learn_something/c++/raytracing/include/common.h \
-  /Users/chuhongwang/My\ Drive/learn_something/c++/raytracing/include/vec3.h \
-  /Users/chuhongwang/My\ Drive/learn_something/c++/raytracing/include/color.h \
-  /Users/chuhongwang/My\ Drive/learn_something/c++/raytracing/include/ray.h \
-  /Users/chuhongwang/My\ Drive/learn_something/c++/raytracing/include/sphere.h \
-  /Users/chuhongwang/My\ Drive/learn_something/c++/raytracing/include/hittable.h \
-  /Users/chuhongwang/My\ Drive/learn_something/c++/raytracing/include/hit_record.h
+  /Users/chuhongwang/My\ Drive/learn_something/c++/ray-tracing/include/common.h \
+  /Users/chuhongwang/My\ Drive/learn_something/c++/ray-tracing/include/vec3.h \
+  /Users/chuhongwang/My\ Drive/learn_something/c++/ray-tracing/include/color.h \
+  /Users/chuhongwang/My\ Drive/learn_something/c++/ray-tracing/include/ray.h \
+  /Users/chuhongwang/My\ Drive/learn_something/c++/ray-tracing/include/sphere.h \
+  /Users/chuhongwang/My\ Drive/learn_something/c++/ray-tracing/include/hittable.h \
+  /Users/chuhongwang/My\ Drive/learn_something/c++/ray-tracing/include/hit_record.h

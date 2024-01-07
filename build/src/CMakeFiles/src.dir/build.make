@@ -53,10 +53,10 @@ RM = /opt/homebrew/Cellar/cmake/3.27.9/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/Users/chuhongwang/My Drive/learn_something/c++/raytracing"
+CMAKE_SOURCE_DIR = "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build"
+CMAKE_BINARY_DIR = "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build"
 
 # Include any dependencies generated for this target.
 include src/CMakeFiles/src.dir/depend.make
@@ -70,18 +70,18 @@ include src/CMakeFiles/src.dir/progress.make
 include src/CMakeFiles/src.dir/flags.make
 
 src/CMakeFiles/src.dir/vec3.cpp.o: src/CMakeFiles/src.dir/flags.make
-src/CMakeFiles/src.dir/vec3.cpp.o: /Users/chuhongwang/My\ Drive/learn_something/c++/raytracing/src/vec3.cpp
+src/CMakeFiles/src.dir/vec3.cpp.o: /Users/chuhongwang/My\ Drive/learn_something/c++/ray-tracing/src/vec3.cpp
 src/CMakeFiles/src.dir/vec3.cpp.o: src/CMakeFiles/src.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object src/CMakeFiles/src.dir/vec3.cpp.o"
-	cd "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build/src" && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/src.dir/vec3.cpp.o -MF CMakeFiles/src.dir/vec3.cpp.o.d -o CMakeFiles/src.dir/vec3.cpp.o -c "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/src/vec3.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object src/CMakeFiles/src.dir/vec3.cpp.o"
+	cd "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build/src" && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/src.dir/vec3.cpp.o -MF CMakeFiles/src.dir/vec3.cpp.o.d -o CMakeFiles/src.dir/vec3.cpp.o -c "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/src/vec3.cpp"
 
 src/CMakeFiles/src.dir/vec3.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/src.dir/vec3.cpp.i"
-	cd "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build/src" && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/src/vec3.cpp" > CMakeFiles/src.dir/vec3.cpp.i
+	cd "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build/src" && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/src/vec3.cpp" > CMakeFiles/src.dir/vec3.cpp.i
 
 src/CMakeFiles/src.dir/vec3.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/src.dir/vec3.cpp.s"
-	cd "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build/src" && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/src/vec3.cpp" -o CMakeFiles/src.dir/vec3.cpp.s
+	cd "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build/src" && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/src/vec3.cpp" -o CMakeFiles/src.dir/vec3.cpp.s
 
 # Object files for target src
 src_OBJECTS = \
@@ -93,19 +93,19 @@ src_EXTERNAL_OBJECTS =
 src/libsrc.a: src/CMakeFiles/src.dir/vec3.cpp.o
 src/libsrc.a: src/CMakeFiles/src.dir/build.make
 src/libsrc.a: src/CMakeFiles/src.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libsrc.a"
-	cd "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build/src" && $(CMAKE_COMMAND) -P CMakeFiles/src.dir/cmake_clean_target.cmake
-	cd "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build/src" && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/src.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libsrc.a"
+	cd "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build/src" && $(CMAKE_COMMAND) -P CMakeFiles/src.dir/cmake_clean_target.cmake
+	cd "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build/src" && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/src.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 src/CMakeFiles/src.dir/build: src/libsrc.a
 .PHONY : src/CMakeFiles/src.dir/build
 
 src/CMakeFiles/src.dir/clean:
-	cd "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build/src" && $(CMAKE_COMMAND) -P CMakeFiles/src.dir/cmake_clean.cmake
+	cd "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build/src" && $(CMAKE_COMMAND) -P CMakeFiles/src.dir/cmake_clean.cmake
 .PHONY : src/CMakeFiles/src.dir/clean
 
 src/CMakeFiles/src.dir/depend:
-	cd "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/Users/chuhongwang/My Drive/learn_something/c++/raytracing" "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/src" "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build" "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build/src" "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build/src/CMakeFiles/src.dir/DependInfo.cmake" "--color=$(COLOR)"
+	cd "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing" "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/src" "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build" "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build/src" "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build/src/CMakeFiles/src.dir/DependInfo.cmake" "--color=$(COLOR)"
 .PHONY : src/CMakeFiles/src.dir/depend
 

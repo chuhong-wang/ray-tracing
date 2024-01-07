@@ -1,4 +1,4 @@
-# Install script for directory: /Users/chuhongwang/My Drive/learn_something/c++/raytracing/src
+# Install script for directory: /Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

@@ -1,6 +1,6 @@
 src/CMakeFiles/src.dir/vec3.cpp.o: \
-  /Users/chuhongwang/My\ Drive/learn_something/c++/raytracing/src/vec3.cpp \
-  /Users/chuhongwang/My\ Drive/learn_something/c++/raytracing/include/vec3.h \
+  /Users/chuhongwang/My\ Drive/learn_something/c++/ray-tracing/src/vec3.cpp \
+  /Users/chuhongwang/My\ Drive/learn_something/c++/ray-tracing/include/vec3.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/c++/v1/cmath \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/c++/v1/__assert \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/c++/v1/__config \

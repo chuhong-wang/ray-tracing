@@ -57,10 +57,10 @@ RM = /opt/homebrew/Cellar/cmake/3.27.9/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/Users/chuhongwang/My Drive/learn_something/c++/raytracing"
+CMAKE_SOURCE_DIR = "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build"
+CMAKE_BINARY_DIR = "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build"
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,14 +87,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build" && $(CMAKE_COMMAND) -E cmake_progress_start "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build/CMakeFiles" "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build/src//CMakeFiles/progress.marks"
-	cd "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build/CMakeFiles" 0
+	cd "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build" && $(CMAKE_COMMAND) -E cmake_progress_start "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build/CMakeFiles" "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build/src//CMakeFiles/progress.marks"
+	cd "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/all
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build/CMakeFiles" 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/clean
+	cd "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/clean
 .PHONY : clean
 
 # The main clean target
@@ -103,22 +103,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/preinstall
+	cd "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/preinstall
+	cd "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build" && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build" && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 src/CMakeFiles/src.dir/rule:
-	cd "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/src.dir/rule
+	cd "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/src.dir/rule
 .PHONY : src/CMakeFiles/src.dir/rule
 
 # Convenience name for target.
@@ -127,7 +127,7 @@ src: src/CMakeFiles/src.dir/rule
 
 # fast build rule for target.
 src/fast:
-	cd "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build" && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/src.dir/build.make src/CMakeFiles/src.dir/build
+	cd "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build" && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/src.dir/build.make src/CMakeFiles/src.dir/build
 .PHONY : src/fast
 
 vec3.o: vec3.cpp.o
@@ -135,7 +135,7 @@ vec3.o: vec3.cpp.o
 
 # target to build an object file
 vec3.cpp.o:
-	cd "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build" && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/src.dir/build.make src/CMakeFiles/src.dir/vec3.cpp.o
+	cd "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build" && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/src.dir/build.make src/CMakeFiles/src.dir/vec3.cpp.o
 .PHONY : vec3.cpp.o
 
 vec3.i: vec3.cpp.i
@@ -143,7 +143,7 @@ vec3.i: vec3.cpp.i
 
 # target to preprocess a source file
 vec3.cpp.i:
-	cd "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build" && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/src.dir/build.make src/CMakeFiles/src.dir/vec3.cpp.i
+	cd "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build" && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/src.dir/build.make src/CMakeFiles/src.dir/vec3.cpp.i
 .PHONY : vec3.cpp.i
 
 vec3.s: vec3.cpp.s
@@ -151,7 +151,7 @@ vec3.s: vec3.cpp.s
 
 # target to generate assembly for a file
 vec3.cpp.s:
-	cd "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build" && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/src.dir/build.make src/CMakeFiles/src.dir/vec3.cpp.s
+	cd "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build" && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/src.dir/build.make src/CMakeFiles/src.dir/vec3.cpp.s
 .PHONY : vec3.cpp.s
 
 # Help Target
@@ -177,6 +177,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd "/Users/chuhongwang/My Drive/learn_something/c++/raytracing/build" && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd "/Users/chuhongwang/My Drive/learn_something/c++/ray-tracing/build" && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
