@@ -9,6 +9,8 @@ class Sphere:public hittable {
         // constructors 
         // Sphere() = default; 
         Sphere(const point3<double>& _center, const double _radius): center(_center), radius(_radius) {}
+        point3<double> get_center() {return center; }
+        double get_radius() {return radius; }
 
         hit_record res; 
 
