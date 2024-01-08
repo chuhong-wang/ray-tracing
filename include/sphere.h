@@ -1,5 +1,6 @@
 #include "hittable.h"
 #include "vec3.h"
+#include "interval.h"
 
 class Sphere:public hittable {
     private:
@@ -14,7 +15,7 @@ class Sphere:public hittable {
 
         hit_record rec; 
 
-        bool hit(ray<double> ray_, double ray_t_min, double ray_t_max, hit_record& rec) const override {
+        bool hit(ray<double> ray_, interval intv, hit_record& rec) const override {
             auto ac = ray_.origin() - center; 
             auto a_pr = dot_product(ray_.direction(), ray_.direction());
             auto b_pr = 2*dot_product(ac, ray_.direction()); 
@@ -24,9 +25,9 @@ class Sphere:public hittable {
             else {
                 rec.t = (-b_pr-std::sqrt(discriminant))/(2.0*a_pr);
 
-                if (rec.t <=ray_t_min || rec.t >= ray_t_max) {
+                if (!intv.contains(rec.t)) {
                     rec.t = (-b_pr+std::sqrt(discriminant))/(2.0*a_pr);
-                    if (rec.t <=ray_t_min || rec.t >= ray_t_max) {return false;}
+                    if (!intv.contains(rec.t)) {return false;}
                 }
                 rec.P = ray_.at(rec.t); 
                 rec.set_face_normal(ray_, (rec.P-center)/radius); 

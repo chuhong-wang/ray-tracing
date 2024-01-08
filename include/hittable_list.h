@@ -22,13 +22,13 @@ class Hittable_list:public hittable {
     }
 
     // member function 
-    bool hit(ray<double> ray_, double ray_t_min, double ray_t_max, hit_record& rec) const override {
+    bool hit(ray<double> ray_, interval intv, hit_record& rec) const override {
         bool hit_something = false; 
         // scan all the objects and determine the smallest t hittable
         for (auto obj:obj_ptrs){
-            if (obj->hit(ray_, ray_t_min, ray_t_max, rec)){
+            if (obj->hit(ray_, intv, rec)){
                 hit_something = true; 
-                ray_t_max = rec.t; 
+                intv.update_max(rec.t); 
             }
         }
         return hit_something; 
