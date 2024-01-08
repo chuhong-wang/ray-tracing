@@ -1,10 +1,10 @@
 #pragma once 
-class interval {
+class Interval {
     private:
         double min; 
         double max;
     public:
-        interval(double _min, double _max): min(_min), max(_max) {}
+        Interval(double _min, double _max): min(_min), max(_max) {}
         bool contains(double x) {
             if(x<=min || x >=max) {return false;}
             else {return true; }

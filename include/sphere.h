@@ -4,18 +4,18 @@
 
 class Sphere:public hittable {
     private:
-        point3<double> center; 
+        Point3<double> center; 
         double radius; 
     public:
         // constructors 
         // Sphere() = default; 
-        Sphere(const point3<double>& _center, const double _radius): center(_center), radius(_radius) {}
-        point3<double> get_center() {return center; }
+        Sphere(const Point3<double>& _center, const double _radius): center(_center), radius(_radius) {}
+        Point3<double> get_center() {return center; }
         double get_radius() {return radius; }
 
-        hit_record rec; 
+        HitRecord rec; 
 
-        bool hit(ray<double> ray_, interval intv, hit_record& rec) const override {
+        bool hit(Ray<double> ray_, Interval intv, HitRecord& rec) const override {
             auto ac = ray_.origin() - center; 
             auto a_pr = dot_product(ray_.direction(), ray_.direction());
             auto b_pr = 2*dot_product(ac, ray_.direction()); 

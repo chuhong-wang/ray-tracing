@@ -22,7 +22,7 @@ class Hittable_list:public hittable {
     }
 
     // member function 
-    bool hit(ray<double> ray_, interval intv, hit_record& rec) const override {
+    bool hit(Ray<double> ray_, Interval intv, HitRecord& rec) const override {
         bool hit_something = false; 
         // scan all the objects and determine the smallest t hittable
         for (auto obj:obj_ptrs){

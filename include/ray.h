@@ -2,19 +2,19 @@
 #include "vec3.h"
 
 template <typename T>
-class ray {
+class Ray {
     private:
-        point3<T> orig; 
-        vec3<T> dir; 
+        Point3<T> orig; 
+        Vec3<T> dir; 
     public:
         // constructor 
-        ray() {}
-        ray(point3<T>& origin, vec3<T>& directory):
+        Ray() {}
+        Ray(Point3<T>& origin, Vec3<T>& directory):
             orig(origin), dir(directory) {}
         // member functions 
-        point3<T> origin() {return orig; }
-        vec3<T> direction() {return dir; }
-        point3<T> at(double t) {
+        Point3<T> origin() {return orig; }
+        Vec3<T> direction() {return dir; }
+        Point3<T> at(double t) {
             return orig + dir*t; 
         }
 
