@@ -24,15 +24,18 @@ class Camera {
   // data members
   double image_width = 800;
   double aspect_ratio = 9.0 / 16.0;
+  int sample_neighbor_pixels = 10; 
+
   double viewport_height = 2.0;
   double focal_length = 1.0;
   Point3<double> camera_center = Point3<double>(0, 0, 0);
 
  private:
+  // set up the image and viewport, functions will be called in initialize()
   double image_height, viewport_width;
   Vec3<double> viewport_u, viewport_v, pixel_delta_u, pixel_delta_v;
   Point3<double> viewport_center, viewport_upper_left, pixel00_loc;
-  // member functions
+
   void compute_image_height() {
     image_height = static_cast<int>(image_width * aspect_ratio);
     image_height = (image_height < 1) ? 1 : image_height;
@@ -50,23 +53,40 @@ class Camera {
     pixel00_loc = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
   }
 
- public:
-  // constructor
-  Camera() {
-    compute_image_height();
-    compute_viewport();
+  Vec3<double> sampleApoint_unitPixel(){
+    Vec3<double> offSet = (-0.5+ random_double<double>())*pixel_delta_u + (-0.5+ random_double<double>())*pixel_delta_v; 
+    return offSet; 
   }
+
+  Ray<double> get_ray(int i, int j){
+    Point3<double> pixel_center = pixel00_loc + (i*pixel_delta_u) + (j*pixel_delta_v); 
+    auto random_offSet = sampleApoint_unitPixel(); 
+    pixel_center += random_offSet; 
+    Vec3<double> ray_direction = pixel_center - camera_center; 
+    Ray ray_(camera_center, ray_direction); 
+    return ray_; 
+  }
+
+ public:
+  void initialize(){
+    compute_image_height(); 
+    compute_viewport(); 
+  }
+
   // Render
   void render(hittable& world) {
+    initialize(); 
     std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
     for (int j = 0; j < image_height; ++j) {
       for (int i = 0; i < image_width; ++i) {
-        // std::cout << v << std::endl;
-        auto pixel_center =
-            pixel00_loc + (i * pixel_delta_u) + (j * pixel_delta_v);
-        auto ray_direction = pixel_center - camera_center;
-        Ray ray_(camera_center, ray_direction);
-        Color<double> pixel_color = ray_color(ray_, world);
+        // antialiasing by sampling light falling around each pixel in a 1x1 square 
+        Color<double> pixel_color(0,0,0); 
+        for (int sample = 0; sample < sample_neighbor_pixels; ++ sample){ 
+          auto ray_ = get_ray(i, j); 
+          pixel_color += ray_color(ray_, world); 
+        }
+        
+        pixel_color = pixel_color/static_cast<double>(sample_neighbor_pixels); 
         write_color(std::cout, pixel_color);
       }
     }

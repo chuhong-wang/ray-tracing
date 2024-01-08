@@ -25,7 +25,7 @@ class Vec3 {
         Vec3 operator-() const {return Vec3(-v[0], -v[1], -v[2]); }
         T operator[](int i) {return v[i]; }
         T operator[](int i) const {return v[i]; }
-        Vec3& operator+=(Vec3& v2) {
+        Vec3& operator+=(const Vec3& v2) {
             v[0]+= v2.v[0]; 
             v[1]+= v2.v[1]; 
             v[2]+= v2.v[2];

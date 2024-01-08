@@ -10,6 +10,9 @@
 int main() {
     // camera 
     Camera camera; 
+    camera.image_width = 100; 
+    camera.aspect_ratio = 1; 
+    camera.sample_neighbor_pixels = 50; 
 
     // world 
     Hittable_list hittable_list; 
