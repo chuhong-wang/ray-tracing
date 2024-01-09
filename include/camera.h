@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 
 #include "color.h"
 #include "common.h"
@@ -15,10 +16,15 @@ class Camera {
   double aspect_ratio = 9.0 / 16.0;
   int sample_neighbor_pixels = 10; 
   int max_reflection_depth = 10; 
+  double reflectance = 0.5; 
 
   double viewport_height = 2.0;
   double focal_length = 1.0;
   Point3<double> camera_center = Point3<double>(0, 0, 0);
+  
+  // "Random" samples a uniform distribution of random vector on a hemisphere
+  // "Lambertian" samples vectors on a contact unit sphere, results in higher probability near object normal and lower probability near surface
+  std::string reflection_random_mode = "Random";
 
  private:
   // set up the image and viewport, functions will be called in initialize()
@@ -48,6 +54,7 @@ class Camera {
     return offSet; 
   }
 
+  // antialiasing utility function: get light around the specified pixel 
   Ray<double> get_ray(int i, int j){
     Point3<double> pixel_center = pixel00_loc + (i*pixel_delta_u) + (j*pixel_delta_v); 
     auto random_offSet = sampleApoint_unitPixel(); 
@@ -57,26 +64,41 @@ class Camera {
     return ray_; 
   }
 
+  Vec3<double> reflection_vector(const Point3<double>& intersecting_point, const Vec3<double>& normal) const {
+    if(reflection_random_mode=="Random"){
+      Vec3<double> reflection_vec = random_vector(intersecting_point); 
+      reflection_vec = unit_vector(reflection_vec); 
+      reflection_vec = dot_product(reflection_vec, normal)>=0? reflection_vec:-reflection_vec; 
+      return reflection_vec; 
+    }
+    else if(reflection_random_mode=="Lambertian"){
+      auto unit_normal = unit_vector(normal);
+      auto contactSphere_center = intersecting_point + unit_normal; 
+      auto point_on_contactSphere = contactSphere_center + random_vector(contactSphere_center); 
+      auto reflection_vec = point_on_contactSphere - intersecting_point;
+      return reflection_vec; 
+    }
+    else {std::cerr << "invalid reflection mode" << std::endl; } 
+  }
+
  public:
   void initialize(){
     compute_image_height(); 
     compute_viewport(); 
   }
 
-    Color<double> ray_color(Ray<double>& r, hittable& obj, int curr_depth) const {
-      HitRecord res;
-      if (obj.hit(r, Interval(zeroTolerence, infinity), res) ) {
-        Vec3<double> reflection_ray = random_vector(res.P); 
-        reflection_ray = reflection_ray/reflection_ray.length(); 
-        reflection_ray = dot_product(reflection_ray, res.normal)>=0? reflection_ray:-reflection_ray; 
-        Ray re_ray = Ray(res.P, reflection_ray); 
-        return 0.5 * ray_color(re_ray, obj, --curr_depth); 
-      }
-      Vec3<double> unit_direction = unit_vector(r.direction());
-      auto a = 0.5 * (unit_direction.y() + 1.0);
-      return (1.0 - a) * Color<double>(1.0, 1.0, 1.0) +
-            a * Color<double>(0.5, 0.7, 1.0);
+  Color<double> ray_color(Ray<double>& r, hittable& obj, int curr_depth) const {
+    HitRecord res;
+    if (obj.hit(r, Interval(zeroTolerence, infinity), res) ) {
+      Vec3<double> reflection_ray = reflection_vector(res.P, res.normal);   
+      Ray re_ray = Ray(res.P, reflection_ray); 
+      return reflectance * ray_color(re_ray, obj, --curr_depth); 
     }
+    Vec3<double> unit_direction = unit_vector(r.direction());
+    auto a = 0.5 * (unit_direction.y() + 1.0);
+    return (1.0 - a) * Color<double>(1.0, 1.0, 1.0) +
+          a * Color<double>(0.5, 0.7, 1.0);
+  }
 
   // Render
   void render(hittable& world) {

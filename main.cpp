@@ -10,21 +10,22 @@
 int main() {
     // // test random vector 
     // random_vector(Point3<double>(0,0,0)); 
-
     // camera 
     Camera camera; 
-    camera.image_width = 800; 
-    camera.aspect_ratio = 4.0/16.0; 
+    camera.image_width = 400; 
+    camera.aspect_ratio = 9.0/16.0; 
     camera.sample_neighbor_pixels = 50; 
+    camera.reflection_random_mode = "Lambertian"; 
+    camera.reflectance = 0.8; 
 
     // world 
     Hittable_list hittable_list; 
     auto ptr1 = std::make_shared<Sphere>(Point3<double>(0,0,-1), 0.5); 
     auto ptr2 = std::make_shared<Sphere>(Point3<double>(0,-100.5,-1), 100); 
-    auto ptr3 = std::make_shared<Sphere>(Point3<double>(1,0,-1), 0.5); 
+    // auto ptr3 = std::make_shared<Sphere>(Point3<double>(1,0,-1), 0.5); 
     hittable_list.add(ptr1); 
     hittable_list.add(ptr2); 
-    hittable_list.add(ptr3); 
+    // hittable_list.add(ptr3); 
 
     //renderer
     camera.render(hittable_list); 
