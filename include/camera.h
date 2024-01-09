@@ -8,10 +8,14 @@
 #include "ray.h"
 #include "vec3.h"
 
-Color<double> ray_color(Ray<double>& r, hittable& obj) {
+Color<double> ray_color( Ray<double>& r, hittable& obj) {
   HitRecord res;
   if (obj.hit(r, Interval(0, infinity), res)) {
-    return 0.5 * (res.normal + Color<double>(1, 1, 1));
+    Vec3<double> reflection_ray = random_vector(res.P); 
+    reflection_ray = reflection_ray/reflection_ray.length(); 
+    reflection_ray = dot_product(reflection_ray, res.normal)>=0? reflection_ray:-reflection_ray; 
+    Ray re_ray = Ray(res.P, reflection_ray); 
+    return 0.5 * ray_color(re_ray, obj); 
   }
   Vec3<double> unit_direction = unit_vector(r.direction());
   auto a = 0.5 * (unit_direction.y() + 1.0);
@@ -22,7 +26,7 @@ Color<double> ray_color(Ray<double>& r, hittable& obj) {
 class Camera {
  public:
   // data members
-  double image_width = 800;
+  double image_width = 100;
   double aspect_ratio = 9.0 / 16.0;
   int sample_neighbor_pixels = 10; 
 

@@ -8,10 +8,13 @@
 #include "camera.h"
 
 int main() {
+    // // test random vector 
+    // random_vector(Point3<double>(0,0,0)); 
+
     // camera 
     Camera camera; 
-    camera.image_width = 100; 
-    camera.aspect_ratio = 1; 
+    camera.image_width = 300; 
+    camera.aspect_ratio = 9.0/16.0; 
     camera.sample_neighbor_pixels = 50; 
 
     // world 

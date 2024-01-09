@@ -13,7 +13,7 @@ class Interval {
             if(x<min || x >max) {return false;}
             else {return true; }
         }
-        double clamp(double x) {
+        double clamp(double x) const {
             if(x < min) {return min; }
             else if(x > max) {return max; }
             else {return x;} 
