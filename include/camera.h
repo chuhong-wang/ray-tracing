@@ -8,27 +8,13 @@
 #include "ray.h"
 #include "vec3.h"
 
-Color<double> ray_color( Ray<double>& r, hittable& obj) {
-  HitRecord res;
-  if (obj.hit(r, Interval(0, infinity), res)) {
-    Vec3<double> reflection_ray = random_vector(res.P); 
-    reflection_ray = reflection_ray/reflection_ray.length(); 
-    reflection_ray = dot_product(reflection_ray, res.normal)>=0? reflection_ray:-reflection_ray; 
-    Ray re_ray = Ray(res.P, reflection_ray); 
-    return 0.5 * ray_color(re_ray, obj); 
-  }
-  Vec3<double> unit_direction = unit_vector(r.direction());
-  auto a = 0.5 * (unit_direction.y() + 1.0);
-  return (1.0 - a) * Color<double>(1.0, 1.0, 1.0) +
-         a * Color<double>(0.5, 0.7, 1.0);
-}
-
 class Camera {
  public:
   // data members
   double image_width = 100;
   double aspect_ratio = 9.0 / 16.0;
   int sample_neighbor_pixels = 10; 
+  int max_reflection_depth = 10; 
 
   double viewport_height = 2.0;
   double focal_length = 1.0;
@@ -77,6 +63,21 @@ class Camera {
     compute_viewport(); 
   }
 
+    Color<double> ray_color(Ray<double>& r, hittable& obj, int curr_depth) const {
+      HitRecord res;
+      if (obj.hit(r, Interval(zeroTolerence, infinity), res) ) {
+        Vec3<double> reflection_ray = random_vector(res.P); 
+        reflection_ray = reflection_ray/reflection_ray.length(); 
+        reflection_ray = dot_product(reflection_ray, res.normal)>=0? reflection_ray:-reflection_ray; 
+        Ray re_ray = Ray(res.P, reflection_ray); 
+        return 0.5 * ray_color(re_ray, obj, --curr_depth); 
+      }
+      Vec3<double> unit_direction = unit_vector(r.direction());
+      auto a = 0.5 * (unit_direction.y() + 1.0);
+      return (1.0 - a) * Color<double>(1.0, 1.0, 1.0) +
+            a * Color<double>(0.5, 0.7, 1.0);
+    }
+
   // Render
   void render(hittable& world) {
     initialize(); 
@@ -87,7 +88,7 @@ class Camera {
         Color<double> pixel_color(0,0,0); 
         for (int sample = 0; sample < sample_neighbor_pixels; ++ sample){ 
           auto ray_ = get_ray(i, j); 
-          pixel_color += ray_color(ray_, world); 
+          pixel_color += ray_color(ray_, world, max_reflection_depth); 
         }
         
         pixel_color = pixel_color/static_cast<double>(sample_neighbor_pixels); 

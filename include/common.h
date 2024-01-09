@@ -5,6 +5,7 @@
 
 const double infinity = std::numeric_limits<double>::infinity();
 const double PI = 3.1415926535897932385;
+const double zeroTolerence = 1e-5; // to treat shadow acne of matte object
 
 template <typename T>
 T degree_to_radian(T& degree_){
