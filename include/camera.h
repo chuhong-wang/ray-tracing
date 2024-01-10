@@ -22,9 +22,6 @@ class Camera {
   double focal_length = 1.0;
   Point3<double> camera_center = Point3<double>(0, 0, 0);
   
-  // "Random" samples a uniform distribution of random vector on a hemisphere
-  // "Lambertian" samples vectors on a contact unit sphere, results in higher probability near object normal and lower probability near surface
-  std::string reflection_random_mode = "Random";
 
  private:
   // set up the image and viewport, functions will be called in initialize()
@@ -64,22 +61,22 @@ class Camera {
     return ray_; 
   }
 
-  Vec3<double> reflection_vector(const Point3<double>& intersecting_point, const Vec3<double>& normal) const {
-    if(reflection_random_mode=="Random"){
-      Vec3<double> reflection_vec = random_vector(intersecting_point); 
-      reflection_vec = unit_vector(reflection_vec); 
-      reflection_vec = dot_product(reflection_vec, normal)>=0? reflection_vec:-reflection_vec; 
-      return reflection_vec; 
-    }
-    else if(reflection_random_mode=="Lambertian"){
-      auto unit_normal = unit_vector(normal);
-      auto contactSphere_center = intersecting_point + unit_normal; 
-      auto point_on_contactSphere = contactSphere_center + random_vector(contactSphere_center); 
-      auto reflection_vec = point_on_contactSphere - intersecting_point;
-      return reflection_vec; 
-    }
-    else {std::cerr << "invalid reflection mode" << std::endl; } 
-  }
+  // Vec3<double> reflection_vector(const Point3<double>& intersecting_point, const Vec3<double>& normal) const {
+  //   Vec3<double> reflection_vec; 
+  //   if(reflection_random_mode=="Random"){
+  //     reflection_vec = random_vector(intersecting_point); 
+  //     reflection_vec = unit_vector(reflection_vec); 
+  //     reflection_vec = dot_product(reflection_vec, normal)>=0? reflection_vec:-reflection_vec; 
+  //   }
+  //   else if(reflection_random_mode=="Lambertian"){
+  //     auto unit_normal = unit_vector(normal);
+  //     auto contactSphere_center = intersecting_point + unit_normal; 
+  //     auto point_on_contactSphere = contactSphere_center + random_vector(contactSphere_center); 
+  //     reflection_vec = point_on_contactSphere - intersecting_point;
+  //   }
+  //   else {std::cerr << "invalid reflection mode" << std::endl; } 
+  //   return reflection_vec; 
+  // }
 
  public:
   void initialize(){
@@ -87,12 +84,16 @@ class Camera {
     compute_viewport(); 
   }
 
-  Color<double> ray_color(Ray<double>& r, hittable& obj, int curr_depth) const {
-    HitRecord res;
-    if (obj.hit(r, Interval(zeroTolerence, infinity), res) ) {
-      Vec3<double> reflection_ray = reflection_vector(res.P, res.normal);   
-      Ray re_ray = Ray(res.P, reflection_ray); 
-      return reflectance * ray_color(re_ray, obj, --curr_depth); 
+  Color<double> ray_color(Ray<double>& r, hittable& scene, int curr_depth) const {
+    HitRecord rec;
+    Ray<double> ray_scattered; 
+    Color<double> attenuation; 
+
+    if (scene.hit(r, Interval(zeroTolerence, infinity), rec) ) {
+      if(rec.material->scatter(r, rec, attenuation, ray_scattered)){
+        return attenuation*ray_color(ray_scattered, scene, --curr_depth); 
+      }
+      else { return Color<double>(0,0,0); }
     }
     Vec3<double> unit_direction = unit_vector(r.direction());
     auto a = 0.5 * (unit_direction.y() + 1.0);

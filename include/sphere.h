@@ -1,19 +1,25 @@
+#pragma once
+
+#include <memory>
+
 #include "hittable.h"
 #include "vec3.h"
 #include "interval.h"
+#include "material.h"
 
 class Sphere:public hittable {
     private:
         Point3<double> center; 
         double radius; 
+        std::shared_ptr<Material> mat; 
     public:
         // constructors 
         // Sphere() = default; 
-        Sphere(const Point3<double>& _center, const double _radius): center(_center), radius(_radius) {}
+        Sphere(const Point3<double>& _center, const double _radius, const std::shared_ptr<Material> t_material): 
+            center(_center), radius(_radius), mat(t_material) {}
         Point3<double> get_center() {return center; }
         double get_radius() {return radius; }
-
-        HitRecord rec; 
+  
 
         bool hit(Ray<double> ray_, Interval intv, HitRecord& rec) const override {
             auto ac = ray_.origin() - center; 
@@ -31,6 +37,8 @@ class Sphere:public hittable {
                 }
                 rec.P = ray_.at(rec.t); 
                 rec.set_face_normal(ray_, (rec.P-center)/radius); 
+                
+                rec.material = mat; 
                 return true;                 
             }
         }
