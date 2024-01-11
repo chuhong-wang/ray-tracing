@@ -37,5 +37,9 @@ Vec3<double> random_vector(const Point3<double>& t_orig) {
     }
 }
 
+void gamma_color(double& before_gamma){
+    before_gamma = std::sqrt(before_gamma); 
+}
+
 
 

@@ -1,6 +1,7 @@
 #pragma once
 #include <cmath>
 #include <iostream>
+#include <cmath>
 
 template <typename T>
 class Vec3 {
@@ -121,4 +122,19 @@ inline T cross_product(const Vec3<T>& v1, const Vec3<T>& v2) {
 template <typename T>
 inline Vec3<T> unit_vector(const Vec3<T>& v){
     return v/v.length(); 
+}
+
+// return the direction vector of a ray reflection  
+template <typename T>
+inline Vec3<T> reflect(const Vec3<T> t_RayIn_direction, const Vec3<T>& t_normal){
+    return t_RayIn_direction - 2*dot_product(t_RayIn_direction, t_normal)*t_normal; 
+}
+
+// return the direction vector of a ray refraction  
+template <typename T> 
+inline Vec3<T> refract(const Vec3<T> t_RayIn_direction_unit, const Vec3<T> t_normal, const double& t_refraction_idx){
+    auto v_surfaceNormal = t_refraction_idx*(t_RayIn_direction_unit - dot_product(t_RayIn_direction_unit, t_normal)*t_normal); 
+    auto v_surfaceNormal_lenSqr = v_surfaceNormal.length_square(); 
+    auto v_surfaceTangent = - sqrt(1 - v_surfaceNormal_lenSqr)*t_normal; 
+    return v_surfaceNormal + v_surfaceTangent; 
 }

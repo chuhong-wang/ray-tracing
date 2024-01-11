@@ -1,6 +1,5 @@
 #pragma once
 #include "ray.h"
-// #include "hit_record.h"
 #include "color.h"
 
 class HitRecord; 

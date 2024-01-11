@@ -8,6 +8,7 @@
 #include "camera.h"
 #include "lambertian.h"
 #include "metal.h"
+#include "dielectric.h"
 
 int main() {
     // // test random vector 
@@ -24,12 +25,13 @@ int main() {
 
     auto matrl_ground = std::make_shared<Lambertian>(Color<double>(0.8, 0.8, 0.0)); 
     auto matrl_center_sphere = std::make_shared<Lambertian>(Color<double>(0.7, 0.3, 0.3), 0.3); 
-    auto matrl_left_sphere = std::make_shared<Metal>(Color<double>(0.8,0.8,0.8), 0.3); 
-    auto matrl_right_sphere = std::make_shared<Metal>(Point3<double>(0.8, 0.6, 0.2), 1.0);
+    auto matrl_left_sphere = std::make_shared<Dielectric>(1.5 ); 
+    auto matrl_right_sphere = std::make_shared<Metal>(Point3<double>(0.8, 0.6, 0.2), 0.3);
 
     scene.add(std::make_shared<Sphere>(Point3<double>(0.0, -100.5, -1.0), 100.0, matrl_ground)); 
     scene.add(std::make_shared<Sphere>(Point3<double>(0.0, 0.0, -1.0), 0.5, matrl_center_sphere)); 
     scene.add(std::make_shared<Sphere>(Point3<double>(-1.0, 0.0, -1.0), 0.5, matrl_left_sphere)); 
+    scene.add(std::make_shared<Sphere>(Point3<double>(-1.0, 0.0, -1.0), -0.4, matrl_left_sphere)); 
     scene.add(std::make_shared<Sphere>(Point3<double>(1.0, 0.0, -1.0), 0.5, matrl_right_sphere));
 
     //renderer

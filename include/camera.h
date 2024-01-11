@@ -61,23 +61,6 @@ class Camera {
     return ray_; 
   }
 
-  // Vec3<double> reflection_vector(const Point3<double>& intersecting_point, const Vec3<double>& normal) const {
-  //   Vec3<double> reflection_vec; 
-  //   if(reflection_random_mode=="Random"){
-  //     reflection_vec = random_vector(intersecting_point); 
-  //     reflection_vec = unit_vector(reflection_vec); 
-  //     reflection_vec = dot_product(reflection_vec, normal)>=0? reflection_vec:-reflection_vec; 
-  //   }
-  //   else if(reflection_random_mode=="Lambertian"){
-  //     auto unit_normal = unit_vector(normal);
-  //     auto contactSphere_center = intersecting_point + unit_normal; 
-  //     auto point_on_contactSphere = contactSphere_center + random_vector(contactSphere_center); 
-  //     reflection_vec = point_on_contactSphere - intersecting_point;
-  //   }
-  //   else {std::cerr << "invalid reflection mode" << std::endl; } 
-  //   return reflection_vec; 
-  // }
-
  public:
   void initialize(){
     compute_image_height(); 

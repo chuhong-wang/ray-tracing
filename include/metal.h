@@ -12,9 +12,8 @@ class Metal:public Material {
 
     // member function
     bool scatter(const Ray<double>& ray_in, HitRecord& rec, 
-        Color<double>& t_attenuation, Ray<double>& ray_scattered ) const override {
-            auto b = dot_product(ray_in.direction(), rec.normal); 
-            auto vec_scattered = ray_in.direction() - 2*b*rec.normal; 
+        Color<double>& t_attenuation, Ray<double>& ray_scattered ) const override { 
+            auto vec_scattered = reflect(ray_in.direction(), rec.normal); 
             ray_scattered = Ray<double>(rec.P, vec_scattered); 
             if(fuzziness>0.0){
                 auto random_unit_vec = random_vector(Vec3<double>(0, 0, 0)); 
