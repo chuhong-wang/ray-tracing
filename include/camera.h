@@ -89,7 +89,7 @@ class Camera {
     Ray<double> ray_scattered; 
     Color<double> attenuation; 
 
-    if (scene.hit(r, Interval(zeroTolerence, infinity), rec) ) {
+    if (curr_depth >=0 && scene.hit(r, Interval(zeroTolerence, infinity), rec) ) {
       if(rec.material->scatter(r, rec, attenuation, ray_scattered)){
         return attenuation*ray_color(ray_scattered, scene, --curr_depth); 
       }

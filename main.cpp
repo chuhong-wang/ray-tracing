@@ -20,18 +20,19 @@ int main() {
     camera.reflectance = 0.8; 
 
     // world 
-    Hittable_list hittable_list; 
-    auto matl1 = std::make_shared<Lambertian>(Color<double>(0.5, 0.5, 0.5)); 
-    auto matl2 = std::make_shared<Metal>(Color<double>(1, 1, 1)); 
-    auto ptr1 = std::make_shared<Sphere>(Point3<double>(0,0,-1), 0.5,matl1); 
-    auto ptr2 = std::make_shared<Sphere>(Point3<double>(0,-100.5,-1), 100, matl1); 
-    auto ptr3 = std::make_shared<Sphere>(Point3<double>(1,0,-1), 0.5, matl2); 
+    Hittable_list scene;
 
-    hittable_list.add(ptr1); 
-    hittable_list.add(ptr2); 
-    hittable_list.add(ptr3); 
+    auto matrl_ground = std::make_shared<Lambertian>(Color<double>(0.8, 0.8, 0.0)); 
+    auto matrl_center_sphere = std::make_shared<Lambertian>(Color<double>(0.7, 0.3, 0.3), 0.3); 
+    auto matrl_left_sphere = std::make_shared<Metal>(Color<double>(0.8,0.8,0.8), 0.3); 
+    auto matrl_right_sphere = std::make_shared<Metal>(Point3<double>(0.8, 0.6, 0.2), 1.0);
+
+    scene.add(std::make_shared<Sphere>(Point3<double>(0.0, -100.5, -1.0), 100.0, matrl_ground)); 
+    scene.add(std::make_shared<Sphere>(Point3<double>(0.0, 0.0, -1.0), 0.5, matrl_center_sphere)); 
+    scene.add(std::make_shared<Sphere>(Point3<double>(-1.0, 0.0, -1.0), 0.5, matrl_left_sphere)); 
+    scene.add(std::make_shared<Sphere>(Point3<double>(1.0, 0.0, -1.0), 0.5, matrl_right_sphere));
 
     //renderer
-    camera.render(hittable_list); 
+    camera.render(scene); 
     
 }

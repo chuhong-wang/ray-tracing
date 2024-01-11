@@ -29,6 +29,7 @@ class Sphere:public hittable {
             auto discriminant = b_pr*b_pr-4*a_pr*c_pr; 
             if (discriminant<0) {return false; }
             else {
+                
                 rec.t = (-b_pr-std::sqrt(discriminant))/(2.0*a_pr);
 
                 if (!intv.contains(rec.t)) {
