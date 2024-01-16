@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <cmath> 
 
 #include "color.h"
 #include "common.h"
@@ -11,17 +12,19 @@
 
 class Camera {
  public:
-  // data members
+  // dimensions of image and viewport 
   double image_width = 100;
   double aspect_ratio = 9.0 / 16.0;
   int sample_neighbor_pixels = 10; 
-  int max_reflection_depth = 10; 
-  double reflectance = 0.5; 
+  int max_reflection_depth = 10;  
 
-  double viewport_height = 2.0;
-  double focal_length = 1.0;
-  Point3<double> camera_center = Point3<double>(0, 0, 0);
-  
+  double vfov = 90; // vertical field of view  
+
+  // location and orientation of camera
+  Vec3<double> v_up = Vec3<double>(0, 1, 0);                      // reference up 
+
+  Point3<double> camera_lookFrom = Point3<double>(0, 0, 0);
+  Point3<double> camera_lookAt = Point3<double>(0, -1.0, -1.0);
 
  private:
   // set up the image and viewport, functions will be called in initialize()
@@ -34,14 +37,23 @@ class Camera {
     image_height = (image_height < 1) ? 1 : image_height;
   }
   void compute_viewport() {
+    double theta = degree_to_radian(vfov);  
+    double focal_length = (camera_lookAt - camera_lookFrom).length(); 
+    double viewport_height = 2*tan(theta/2)*focal_length; 
+
+    Vec3<double> w = unit_vector(camera_lookFrom - camera_lookAt);  // opposite view direction 
+    Vec3<double> u = unit_vector(cross_product(v_up, w));           // camera right 
+    Vec3<double> v =  cross_product(w, u);                          // camera up 
+    
     viewport_width =
         viewport_height * static_cast<double>(image_width / image_height);
-    viewport_u = Vec3<double>(viewport_width, 0, 0);
-    viewport_v = Vec3<double>(0, -viewport_height, 0);
+    viewport_u = u*viewport_width;
+    viewport_v = -v*viewport_height;
     pixel_delta_u = viewport_u / static_cast<double>(image_width);
     pixel_delta_v = viewport_v / static_cast<double>(image_height);
-    viewport_center = camera_center + Vec3<double>(0, 0, focal_length);
-    viewport_upper_left = camera_center - Vec3<double>(0, 0, focal_length) -
+
+    viewport_center = camera_lookFrom - focal_length * w;
+    viewport_upper_left = camera_lookFrom - focal_length * w -
                           viewport_u / 2.0 - viewport_v / 2.0;
     pixel00_loc = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
   }
@@ -56,8 +68,8 @@ class Camera {
     Point3<double> pixel_center = pixel00_loc + (i*pixel_delta_u) + (j*pixel_delta_v); 
     auto random_offSet = sampleApoint_unitPixel(); 
     pixel_center += random_offSet; 
-    Vec3<double> ray_direction = pixel_center - camera_center; 
-    Ray ray_(camera_center, ray_direction); 
+    Vec3<double> ray_direction = pixel_center - camera_lookFrom; 
+    Ray ray_(camera_lookFrom, ray_direction); 
     return ray_; 
   }
 

@@ -8,7 +8,7 @@ const double PI = 3.1415926535897932385;
 const double zeroTolerence = 1e-5; // to treat shadow acne of matte object
 
 template <typename T>
-T degree_to_radian(T& degree_){
+T degree_to_radian(const T& degree_){
     return degree_/180.0*PI; 
 }
 
@@ -38,6 +38,7 @@ Vec3<double> random_vector(const Point3<double>& t_orig) {
 }
 
 void gamma_color(double& before_gamma){
+    before_gamma = fmax(0.0, before_gamma); 
     before_gamma = std::sqrt(before_gamma); 
 }
 
