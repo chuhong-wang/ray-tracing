@@ -20,12 +20,14 @@ int main() {
     camera.image_width = 400; 
     camera.sample_neighbor_pixels = 50; 
 
-    camera.vfov = 90; 
-    camera.camera_lookFrom = Point3<double>(3, 3, 1);
+    camera.vfov = 40; 
+    camera.camera_lookFrom = Point3<double>(3, 1, 1);
     camera.camera_lookAt = Point3<double>(0, 0, -1);
 
-    camera.defocus_angle = 10.0; 
-    camera.focus_dist = 4.22; 
+    camera.defocus_angle = 0.0; 
+    camera.focus_dist = 3.26; 
+
+    camera.shutter_time = 0.1; 
 
     // world 
     Hittable_list scene;
@@ -66,7 +68,10 @@ int main() {
             else {
                 matrl = make_shared<Dielectric>(1.5); 
             }
-            scene.add(make_shared<Sphere>(center, 0.2, matrl)); 
+
+            if(sample_matrl > 0.8){ scene.add(make_shared<Sphere>(center,center+Vec3<double>(0, random_double<double>(0, 0.5), 0), 0.2, matrl)); }
+
+            else { scene.add(make_shared<Sphere>(center, 0.2, matrl)); }
         }
     }
     // Hittable_list world;

@@ -5,6 +5,10 @@ class Interval {
         double max;
     public:
         Interval(double _min, double _max): min(_min), max(_max) {}
+
+        double upperbound() {return max; }
+        double lowerbound() {return min; }
+
         bool contains(double x) {
             if(x<=min || x >=max) {return false;}
             else {return true; }

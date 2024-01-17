@@ -26,11 +26,11 @@ class Dielectric: public Material {
             auto normal_distribution = random_double<double>(); 
             if (sine_thetaOut > 1.0 || R_schlick > normal_distribution) {
                 auto reflect_dir = reflect(ray_in_dir, rec.normal); 
-                ray_scattered = Ray<double>(rec.P, reflect_dir);
+                ray_scattered = Ray<double>(rec.P, reflect_dir, ray_in.time());
             }
             else {
                 auto refract_dir = refract(ray_in_dir, rec.normal, refractive_idx_ratio); 
-                ray_scattered = Ray<double>(rec.P, refract_dir);
+                ray_scattered = Ray<double>(rec.P, refract_dir, ray_in.time());
             }
             return true; 
         }

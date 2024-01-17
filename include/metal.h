@@ -14,11 +14,11 @@ class Metal:public Material {
     bool scatter(const Ray<double>& ray_in, HitRecord& rec, 
         Color<double>& t_attenuation, Ray<double>& ray_scattered ) const override { 
             auto vec_scattered = reflect(ray_in.direction(), rec.normal); 
-            ray_scattered = Ray<double>(rec.P, vec_scattered); 
+            ray_scattered = Ray<double>(rec.P, vec_scattered, ray_in.time()); 
             if(fuzziness>0.0){
                 auto random_unit_vec = random_vector(Vec3<double>(0, 0, 0)); 
                 auto fuzzed = unit_vector(random_unit_vec)*fuzziness + vec_scattered;
-                ray_scattered = Ray<double>(rec.P, fuzzed); 
+                ray_scattered = Ray<double>(rec.P, fuzzed, ray_in.time()); 
             }
             t_attenuation = attenuation; 
             return true; 

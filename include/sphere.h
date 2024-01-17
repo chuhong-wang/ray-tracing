@@ -14,6 +14,8 @@ class Sphere:public hittable {
         bool is_moving; 
         double radius; 
         std::shared_ptr<Material> mat; 
+
+        
     public:
         // constructors 
         // Sphere() = default; 
@@ -30,7 +32,14 @@ class Sphere:public hittable {
   
 
         bool hit(Ray<double> ray_, Interval intv, HitRecord& rec) const override {
-            auto ac = ray_.origin() - center; 
+
+            auto new_center = center; 
+            // motion blurring 
+            if(is_moving) {
+                new_center = ray_.time()*center_vec + center; 
+            }
+
+            auto ac = ray_.origin() - new_center; 
             auto a_pr = dot_product(ray_.direction(), ray_.direction());
             auto b_pr = 2*dot_product(ac, ray_.direction()); 
             auto c_pr = dot_product(ac, ac) - radius*radius; 
@@ -45,7 +54,7 @@ class Sphere:public hittable {
                     if (!intv.contains(rec.t)) {return false;}
                 }
                 rec.P = ray_.at(rec.t); 
-                rec.set_face_normal(ray_, (rec.P-center)/radius); 
+                rec.set_face_normal(ray_, (rec.P-new_center)/radius); 
                 
                 rec.material = mat; 
                 return true;                 

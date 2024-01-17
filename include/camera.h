@@ -22,6 +22,8 @@ class Camera {
   double defocus_angle = 10;    // defocus blur settings
   double focus_dist = 10; 
 
+  double shutter_time = 0.1; 
+
   // location and orientation of camera
   Vec3<double> v_up = Vec3<double>(0, 1, 0);                      // reference up 
 
@@ -87,8 +89,10 @@ class Camera {
     // defocus blurring 
     auto new_camera_lookFrom = defocus_angle<=0.0?camera_lookFrom:defocus_sample(camera_lookFrom); 
     Vec3<double> ray_direction = pixel_center - new_camera_lookFrom; 
-    Ray ray_(new_camera_lookFrom, ray_direction, ); 
-    
+
+    auto time = random_double<double>();  
+    Ray ray_(new_camera_lookFrom, ray_direction, time); 
+
     return ray_; 
   }
 
@@ -126,7 +130,6 @@ class Camera {
         for (int sample = 0; sample < sample_neighbor_pixels; ++ sample){ 
             auto ray_ = get_ray(i, j); 
             pixel_color += ray_color(ray_, world, max_reflection_depth); 
-
         }
         pixel_color = pixel_color/static_cast<double>(sample_neighbor_pixels); 
         write_color(std::cout, pixel_color);
