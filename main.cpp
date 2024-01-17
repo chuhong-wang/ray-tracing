@@ -19,11 +19,13 @@ int main() {
     Camera camera; 
     camera.image_width = 400; 
     camera.sample_neighbor_pixels = 50; 
-    // camera.reflectance = 0.8; 
 
-    camera.vfov = 20; 
-    camera.camera_lookFrom = Point3<double>(13, 3, 2);
-    camera.camera_lookAt = Point3<double>(0, 0, 0);
+    camera.vfov = 90; 
+    camera.camera_lookFrom = Point3<double>(3, 3, 1);
+    camera.camera_lookAt = Point3<double>(0, 0, -1);
+
+    camera.defocus_angle = 10.0; 
+    camera.focus_dist = 4.22; 
 
     // world 
     Hittable_list scene;
@@ -67,9 +69,19 @@ int main() {
             scene.add(make_shared<Sphere>(center, 0.2, matrl)); 
         }
     }
+    // Hittable_list world;
+
+    // auto material_ground = make_shared<Lambertian>(Color<double>(0.8, 0.8, 0.0));
+    // auto material_center = make_shared<Lambertian>(Color<double>(0.1, 0.2, 0.5));
+    // auto material_left   = make_shared<Dielectric>(1.5);
+    // auto material_right  = make_shared<Metal>(Color<double>(0.8, 0.6, 0.2), 0.0);
+
+    // world.add(make_shared<Sphere>(Point3<double>( 0.0, -100.5, -1.0), 100.0, material_ground));
+    // world.add(make_shared<Sphere>(Point3<double>( 0.0,    0.0, -1.0),   0.5, material_center));
+    // world.add(make_shared<Sphere>(Point3<double>(-1.0,    0.0, -1.0),   0.5, material_left));
+    // world.add(make_shared<Sphere>(Point3<double>(-1.0,    0.0, -1.0),  -0.4, material_left));
+    // world.add(make_shared<Sphere>(Point3<double>( 1.0,    0.0, -1.0),   0.5, material_right));
 
     //renderer
-
     camera.render(scene); 
-    
 }

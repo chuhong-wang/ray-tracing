@@ -19,6 +19,8 @@ class Camera {
   int max_reflection_depth = 10;  
 
   double vfov = 90; // vertical field of view  
+  double defocus_angle = 10;    // defocus blur settings
+  double focus_dist = 10; 
 
   // location and orientation of camera
   Vec3<double> v_up = Vec3<double>(0, 1, 0);                      // reference up 
@@ -26,11 +28,15 @@ class Camera {
   Point3<double> camera_lookFrom = Point3<double>(0, 0, 0);
   Point3<double> camera_lookAt = Point3<double>(0, -1.0, -1.0);
 
+
  private:
   // set up the image and viewport, functions will be called in initialize()
   double image_height, viewport_width;
   Vec3<double> viewport_u, viewport_v, pixel_delta_u, pixel_delta_v;
-  Point3<double> viewport_center, viewport_upper_left, pixel00_loc;
+  Point3<double> viewport_upper_left, pixel00_loc;
+
+  Vec3<double> u, v, w; 
+  double defocus_disk_radius; 
 
   void compute_image_height() {
     image_height = static_cast<int>(image_width * aspect_ratio);
@@ -38,12 +44,14 @@ class Camera {
   }
   void compute_viewport() {
     double theta = degree_to_radian(vfov);  
-    double focal_length = (camera_lookAt - camera_lookFrom).length(); 
-    double viewport_height = 2*tan(theta/2)*focal_length; 
+    double viewport_height = 2*tan(theta/2)*focus_dist; 
 
-    Vec3<double> w = unit_vector(camera_lookFrom - camera_lookAt);  // opposite view direction 
-    Vec3<double> u = unit_vector(cross_product(v_up, w));           // camera right 
-    Vec3<double> v =  cross_product(w, u);                          // camera up 
+    auto aperture_angle = degree_to_radian(defocus_angle); 
+    this->defocus_disk_radius = tan(aperture_angle/2) * focus_dist; 
+
+    this->w = unit_vector(camera_lookFrom - camera_lookAt);  // opposite view direction 
+    this->u = unit_vector(cross_product(v_up, w));           // camera right 
+    this->v = cross_product(w, u);                          // camera up 
     
     viewport_width =
         viewport_height * static_cast<double>(image_width / image_height);
@@ -52,8 +60,7 @@ class Camera {
     pixel_delta_u = viewport_u / static_cast<double>(image_width);
     pixel_delta_v = viewport_v / static_cast<double>(image_height);
 
-    viewport_center = camera_lookFrom - focal_length * w;
-    viewport_upper_left = camera_lookFrom - focal_length * w -
+    viewport_upper_left = camera_lookFrom - focus_dist * w -
                           viewport_u / 2.0 - viewport_v / 2.0;
     pixel00_loc = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
   }
@@ -63,13 +70,24 @@ class Camera {
     return offSet; 
   }
 
+  Point3<double> defocus_sample(const Point3<double>& t_center) {
+    auto rand_vector_onDisk = random_vector_within_unit_disk()*defocus_disk_radius; 
+    // std::cout << "t_center" << t_center << "defocus shift" << (this->u)*rand_vector_onDisk[0] + (this->v)*rand_vector_onDisk[1]; 
+    return t_center + (this->u)*rand_vector_onDisk[0] + (this->v)*rand_vector_onDisk[1]; 
+  }
+
   // antialiasing utility function: get light around the specified pixel 
   Ray<double> get_ray(int i, int j){
-    Point3<double> pixel_center = pixel00_loc + (i*pixel_delta_u) + (j*pixel_delta_v); 
+    Point3<double> pixel_center = pixel00_loc + (i*pixel_delta_u) + (j*pixel_delta_v);
+
+    // antialiasing  
     auto random_offSet = sampleApoint_unitPixel(); 
     pixel_center += random_offSet; 
-    Vec3<double> ray_direction = pixel_center - camera_lookFrom; 
-    Ray ray_(camera_lookFrom, ray_direction); 
+
+    // defocus blurring 
+    auto new_camera_lookFrom = defocus_angle<=0.0?camera_lookFrom:defocus_sample(camera_lookFrom); 
+    Vec3<double> ray_direction = pixel_center - new_camera_lookFrom; 
+    Ray ray_(new_camera_lookFrom, ray_direction); 
     return ray_; 
   }
 
@@ -105,10 +123,10 @@ class Camera {
         // antialiasing by sampling light falling around each pixel in a 1x1 square 
         Color<double> pixel_color(0,0,0); 
         for (int sample = 0; sample < sample_neighbor_pixels; ++ sample){ 
-          auto ray_ = get_ray(i, j); 
-          pixel_color += ray_color(ray_, world, max_reflection_depth); 
+            auto ray_ = get_ray(i, j); 
+            pixel_color += ray_color(ray_, world, max_reflection_depth); 
+
         }
-        
         pixel_color = pixel_color/static_cast<double>(sample_neighbor_pixels); 
         write_color(std::cout, pixel_color);
       }

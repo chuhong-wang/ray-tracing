@@ -37,6 +37,15 @@ Vec3<double> random_vector(const Point3<double>& t_orig) {
     }
 }
 
+Vec3<double> random_vector_within_unit_disk() {
+    while (true){
+        auto p = Vec3<double>(random_double(-1.0, 1.0), random_double(-1.0, 1.0), 0); 
+        if (p.length()<=1.0){
+            return p; 
+        }
+    }
+}
+
 void gamma_color(double& before_gamma){
     before_gamma = fmax(0.0, before_gamma); 
     before_gamma = std::sqrt(before_gamma); 
