@@ -10,13 +10,21 @@
 class Sphere:public hittable {
     private:
         Point3<double> center; 
+        Vec3<double> center_vec; 
+        bool is_moving; 
         double radius; 
         std::shared_ptr<Material> mat; 
     public:
         // constructors 
         // Sphere() = default; 
-        Sphere(const Point3<double>& _center, const double _radius, const std::shared_ptr<Material> t_material): 
-            center(_center), radius(_radius), mat(t_material) {}
+
+        // provide two center positions for moving spheres, one center positions for static spheres 
+        Sphere(const Point3<double>& t_center1, const double t_radius, const std::shared_ptr<Material> t_material):
+            center(t_center1), center_vec(Vec3<double>(0,0,0)), radius(t_radius), mat(t_material), is_moving(false) {}
+
+        Sphere(const Point3<double>& t_center1, const Point3<double>& t_center2, const double t_radius, const std::shared_ptr<Material> t_material): 
+            center(t_center1), center_vec(t_center2 - t_center1), radius(t_radius), mat(t_material), is_moving(true) {}
+        
         Point3<double> get_center() {return center; }
         double get_radius() {return radius; }
   

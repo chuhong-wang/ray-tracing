@@ -87,7 +87,8 @@ class Camera {
     // defocus blurring 
     auto new_camera_lookFrom = defocus_angle<=0.0?camera_lookFrom:defocus_sample(camera_lookFrom); 
     Vec3<double> ray_direction = pixel_center - new_camera_lookFrom; 
-    Ray ray_(new_camera_lookFrom, ray_direction); 
+    Ray ray_(new_camera_lookFrom, ray_direction, ); 
+    
     return ray_; 
   }
 
