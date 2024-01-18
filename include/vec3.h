@@ -108,6 +108,11 @@ inline Vec3<T> operator/(const Vec3<T>& v1, const T m) {
 }
 
 template <typename T> 
+inline Vec3<T> operator/(const T m, const Vec3<T>& v1) {
+    return Vec3<T>(m/v1[0], m/v1[1], m/v1[2]); 
+}
+
+template <typename T> 
 inline T dot_product(const Vec3<T>& v1, const Vec3<T>& v2) {
     return v1[0]*v2[0] + v1[1]*v2[1] + v1[2]*v2[2]; 
 }

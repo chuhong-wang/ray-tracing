@@ -10,7 +10,7 @@ class Ray {
     public:
         // constructor 
         Ray() {}
-        Ray(Point3<T>& t_origin, Vec3<T>& t_direction, T t_time):
+        Ray(const Point3<T>& t_origin, const Vec3<T>& t_direction, const T t_time):
             orig(t_origin), dir(t_direction), ray_time(t_time) {}
         
         // member functions 

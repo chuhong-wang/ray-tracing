@@ -10,7 +10,7 @@ using std::shared_ptr;
 class Hittable_list:public hittable {
     private:
     // data member 
-    std::vector<std::shared_ptr<hittable>> obj_ptrs; 
+    std::vector<std::shared_ptr<hittable>> obj_ptrs;  
 
     public:
     // constructor
@@ -32,5 +32,20 @@ class Hittable_list:public hittable {
             }
         }
         return hit_something; 
+    }
+
+    size_t size() const {
+        return obj_ptrs.size(); }
+
+    std::vector<std::shared_ptr<hittable>> get_objects() const {
+        return obj_ptrs; 
+    }
+    
+    Aabb bounding_box() const override {
+        Aabb bbox; 
+        for (auto obj_ptr:obj_ptrs){
+            bbox.add(obj_ptr->bounding_box()); 
+        }
+        return bbox; 
     }
 }; 

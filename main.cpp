@@ -55,7 +55,7 @@ int main() {
     double sample_matrl; 
 
     for (int a = -2; a<2; ++a) {
-        for (int b = -2; b < 2; ++b) {
+        for (int b = 0; b < 1; ++b) {
             sample_matrl = random_double<double>(); 
             auto center = Point3<double>(a, 0.2, b); 
             shared_ptr<Material> matrl; 
