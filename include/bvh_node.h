@@ -21,53 +21,43 @@ bool comparator(std::shared_ptr<hittable> ptr1, std::shared_ptr<hittable> ptr2){
 class Bvh_node: public hittable {
     public:
         // constructor 
-        Bvh_node(const Hittable_list& obj_list): Bvh_node(obj_list, 0, obj_list.size()) {}
-        Bvh_node(const Hittable_list& obj_list, int start, int end) {
-            bbox = obj_list.bounding_box(); 
-            auto objects = obj_list.get_objects();
+        Bvh_node(const Hittable_list& obj_list): Bvh_node(obj_list.get_objects(), 0, obj_list.size()) {}
+        Bvh_node(const std::vector<std::shared_ptr<hittable>>& obj_ptrs, int start, int end) {
+            // auto objects = obj_list.get_objects();
+
+            auto objects = obj_ptrs; 
 
             if (end-start==1) {
                 left = objects[start]; 
                 right = objects[start];
-                std::cout<<"1" << left->bounding_box().axis(0); 
-                std::cout<<"1"  << right->bounding_box().axis(0); 
             }
             else if (end - start == 2){
                 left = objects[start]; 
                 right = objects[start + 1]; 
-                std::cout<<"2"  << left->bounding_box().axis(0); 
-                std::cout<<"2"  << right->bounding_box().axis(0); 
             }
             else {
                 std::sort(objects.begin()+start, objects.begin()+end,  comparator); 
                 std::size_t const half_size = (end-start) / 2; 
-                left = std::make_shared<Bvh_node>(obj_list, start, start+half_size); 
-                right = std::make_shared<Bvh_node>(obj_list, start+half_size, end); 
+                left = std::make_shared<Bvh_node>(objects, start, start+half_size); 
+                right = std::make_shared<Bvh_node>(objects, start+half_size, end); 
             }
+            bbox = Aabb(left->bounding_box()); 
+            bbox.add(right->bounding_box());
         }
 
         bool hit(Ray<double> ray_in,  Interval intv, HitRecord& rec_) const override {
-            if(bbox.hit(ray_in)){
-                std::cout << "check left" << std::endl; 
+            if(bbox.hit(ray_in, intv)){
                 bool left_hit = left->hit(ray_in, intv, rec_);
-                // std::cout << rec_.P << std::endl; 
-                // std::cout << left->bounding_box().axis(0) << std::endl; 
-                // std::cout << left->hit(ray_in, intv, rec_) << std::endl; 
-                // std::cout << "left_hit: " << left_hit << std::endl; 
-                // if (left_hit) {intv.update_max(rec_.t); }
-                std::cout << "check right" << std::endl;  
-                auto right_hit = right->hit(ray_in, intv, rec_);
-
-                std::cout << "left_hit: " << left_hit << "right_hit: " << right_hit << std::endl; 
+                if(left_hit) {intv.update_max(rec_.t); }
+                bool right_hit = right->hit(ray_in, intv, rec_);
+                // std::cout <<bbox.axis(0) << "left_hit: " << left_hit << "right_hit: " << right_hit << std::endl; 
                 return left_hit||right_hit; 
             }
             else {return false; }
         }
-
         Aabb bounding_box() const override {
             return bbox; 
         }
-
 
     private: 
         shared_ptr<hittable> left; 

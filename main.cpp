@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include "common.h"
 #include "vec3.h"
 #include "color.h"
@@ -9,6 +10,7 @@
 #include "lambertian.h"
 #include "metal.h"
 #include "dielectric.h"
+#include "bvh_node.h"
 
 using std::shared_ptr, std::make_shared; 
 
@@ -21,11 +23,11 @@ int main() {
     camera.sample_neighbor_pixels = 50; 
 
     camera.vfov = 40; 
-    camera.camera_lookFrom = Point3<double>(3, 1, 1);
+    camera.camera_lookFrom = Point3<double>(3, 3, 1);
     camera.camera_lookAt = Point3<double>(0, 0, -1);
 
     camera.defocus_angle = 0.0; 
-    camera.focus_dist = 3.26; 
+    camera.focus_dist = 13.26; 
 
     camera.shutter_time = 0.1; 
 
@@ -55,7 +57,7 @@ int main() {
     double sample_matrl; 
 
     for (int a = -2; a<2; ++a) {
-        for (int b = 0; b < 1; ++b) {
+        for (int b = -2; b < 2; ++b) {
             sample_matrl = random_double<double>(); 
             auto center = Point3<double>(a, 0.2, b); 
             shared_ptr<Material> matrl; 
@@ -72,7 +74,7 @@ int main() {
             if(sample_matrl > 0.8){ scene.add(make_shared<Sphere>(center,center+Vec3<double>(0, random_double<double>(0, 0.5), 0), 0.2, matrl)); }
 
             else { scene.add(make_shared<Sphere>(center, 0.2, matrl)); }
-        }
+        }    
     }
     // Hittable_list world;
 
@@ -88,5 +90,10 @@ int main() {
     // world.add(make_shared<Sphere>(Point3<double>( 1.0,    0.0, -1.0),   0.5, material_right));
 
     //renderer
-    camera.render(scene); 
+    // camera.render(scene); 
+
+    // apply BVH algo
+    auto world = Bvh_node(scene); 
+    camera.render(world); 
+    
 }

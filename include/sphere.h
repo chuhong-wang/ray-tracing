@@ -43,6 +43,7 @@ class Sphere:public hittable {
 
         bool hit(Ray<double> ray_, Interval intv, HitRecord& rec) const override {
             auto new_center = center; 
+
             // motion blurring 
             if(is_moving) {
                 new_center = ray_.time()*center_vec + center; 
@@ -65,7 +66,6 @@ class Sphere:public hittable {
                 rec.set_face_normal(ray_, (rec.P-new_center)/radius); 
                 
                 rec.material = mat; 
-                std::cout <<"intersecting point:" << rec.P << std::endl; 
                 return true;                 
             }
         }

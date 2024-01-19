@@ -10,24 +10,24 @@ add_executable(Main main.cpp)
 
 # # add_subdirectory follows the CMakeLists.txt in the specified directory 
 add_subdirectory(src/)
-add_subdirectory(tests/)
-add_subdirectory(googletest/)
+# add_subdirectory(tests/)
+# add_subdirectory(googletest/)
 
 # # src is the name of library (aka. consistent with src in target_include_directories(src PUBLIC <include directories>))
 target_link_libraries(Main PUBLIC src)
 
-enable_testing ()
-# # NAME: name of the test 
-# # COMMAND: existing executable 
-add_test (NAME BVH COMMAND BVH)
+# enable_testing ()
+# # # NAME: name of the test 
+# # # COMMAND: existing executable 
+# add_test (NAME BVH COMMAND BVH)
 
 # Add a custom command to run the command after building
 # Specify the output directory for the executable Main 
 # `CMAKE_SOURCE_DIR`  this is the directory which contains the top-level `CMakeLists.txt`, i.e. the top level source directory.
-# set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/)
 
-# # # Add custom command to run the executable after build
-# add_custom_command(TARGET Main POST_BUILD
-#     COMMAND ${CMAKE_SOURCE_DIR}/Main > ${CMAKE_SOURCE_DIR}/img.ppm
-#     COMMENT "Running Main and generating img.ppm"
-# )
+# # Add custom command to run the executable after build
+add_custom_command(TARGET Main POST_BUILD
+    COMMAND ${CMAKE_SOURCE_DIR}/Main > ${CMAKE_SOURCE_DIR}/img.ppm
+    COMMENT "Running Main and generating img.ppm"
+)

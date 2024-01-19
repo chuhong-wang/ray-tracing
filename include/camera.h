@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <cmath> 
+#include <chrono>
 
 #include "color.h"
 #include "common.h"
@@ -123,7 +124,10 @@ class Camera {
   void render(hittable& world) {
     initialize(); 
     std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+    auto startTime = std::chrono::high_resolution_clock::now();
     for (int j = 0; j < image_height; ++j) {
+      // measure running time 
+    
       for (int i = 0; i < image_width; ++i) {
         // antialiasing by sampling light falling around each pixel in a 1x1 square 
         Color<double> pixel_color(0,0,0); 
@@ -134,6 +138,9 @@ class Camera {
         pixel_color = pixel_color/static_cast<double>(sample_neighbor_pixels); 
         write_color(std::cout, pixel_color);
       }
+      auto currTime = std::chrono::high_resolution_clock::now();
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds>(currTime - startTime).count();
+      std::clog << "height= " << j << ", end Time: " << duration << "\n";
     }
   }
 };

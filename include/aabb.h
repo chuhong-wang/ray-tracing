@@ -31,7 +31,7 @@ class Aabb {
         z.combine(obj_bbox.z); 
     }
 
-    bool hit(const Ray<double>& ray_in) const {
+    bool hit(const Ray<double>& ray_in, Interval ray_t) const {
         auto invD = 1.0/ray_in.direction(); 
         for (int i = 0; i<3; ++i){
             auto itvl = axis(i);  
@@ -42,11 +42,11 @@ class Aabb {
                 auto tmp = tx0; tx0 = tx1; tx1 = tmp; 
             }
 
-            itvl.min = fmax(tx0, itvl.min); 
-            itvl.max = fmin(tx1, itvl.max); 
-
+            ray_t.min = fmax(tx0, ray_t.min); 
+            ray_t.max = fmin(tx1, ray_t.max); 
             if(itvl.min >= itvl.max) {return false; }
         }
         return true; 
     }
+
 }; 
