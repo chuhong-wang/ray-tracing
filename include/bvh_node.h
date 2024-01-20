@@ -23,8 +23,6 @@ class Bvh_node: public hittable {
         // constructor 
         Bvh_node(const Hittable_list& obj_list): Bvh_node(obj_list.get_objects(), 0, obj_list.size()) {}
         Bvh_node(const std::vector<std::shared_ptr<hittable>>& obj_ptrs, int start, int end) {
-            // auto objects = obj_list.get_objects();
-
             auto objects = obj_ptrs; 
 
             if (end-start==1) {
@@ -50,14 +48,11 @@ class Bvh_node: public hittable {
                 bool left_hit = left->hit(ray_in, intv, rec_);
                 if(left_hit) {intv.update_max(rec_.t); }
                 bool right_hit = right->hit(ray_in, intv, rec_);
-                // std::cout <<bbox.axis(0) << "left_hit: " << left_hit << "right_hit: " << right_hit << std::endl; 
                 return left_hit||right_hit; 
             }
             else {return false; }
         }
-        Aabb bounding_box() const override {
-            return bbox; 
-        }
+        Aabb bounding_box() const override { return bbox; }
 
     private: 
         shared_ptr<hittable> left; 

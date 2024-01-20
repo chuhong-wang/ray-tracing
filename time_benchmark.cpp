@@ -56,34 +56,40 @@ int main() {
     
     double sample_matrl; 
     
-    int ij_bound = 5; 
+    for (int ij_bound = 1; ij_bound < 20; ++ij_bound){
+        for (int a = -ij_bound; a<ij_bound; ++a) {
+            for (int b = -ij_bound; b < ij_bound; ++b) {
+                sample_matrl = random_double<double>(); 
+                auto center = Point3<double>(a, 0.2, b); 
+                shared_ptr<Material> matrl; 
+                if (sample_matrl < 0.5) {
+                    matrl = make_shared<Lambertian>(Color<double>(random_double<double>(), 1, 1)); 
+                }
+                else if (sample_matrl < 0.75) {
+                    matrl = make_shared<Metal>(Color<double>(1, random_double<double>(), 1), random_double<double>(0, 0.5));
+                }
+                else {
+                    matrl = make_shared<Dielectric>(1.5); 
+                }
 
-    for (int a = -ij_bound; a<ij_bound; ++a) {
-        for (int b = -ij_bound; b < ij_bound; ++b) {
-            sample_matrl = random_double<double>(); 
-            auto center = Point3<double>(a, 0.2, b); 
-            shared_ptr<Material> matrl; 
-            if (sample_matrl < 0.5) {
-                matrl = make_shared<Lambertian>(Color<double>(random_double<double>(), 1, 1)); 
-            }
-            else if (sample_matrl < 0.75) {
-                matrl = make_shared<Metal>(Color<double>(1, random_double<double>(), 1), random_double<double>(0, 0.5));
-            }
-            else {
-                matrl = make_shared<Dielectric>(1.5); 
-            }
+                if(sample_matrl > 0.8){ scene.add(make_shared<Sphere>(center,center+Vec3<double>(0, random_double<double>(0, 0.5), 0), 0.2, matrl)); }
 
-            if(sample_matrl > 0.8){ scene.add(make_shared<Sphere>(center,center+Vec3<double>(0, random_double<double>(0, 0.5), 0), 0.2, matrl)); }
+                else { scene.add(make_shared<Sphere>(center, 0.2, matrl)); }
+            }    
+        }
+        auto startTime = std::chrono::high_resolution_clock::now();
+        camera.render(scene); 
+        auto currTime1 = std::chrono::high_resolution_clock::now();
+        auto duration_bruteForce = std::chrono::duration_cast<std::chrono::microseconds>(currTime1 - startTime).count();
 
-            else { scene.add(make_shared<Sphere>(center, 0.2, matrl)); }
-        }    
+        // apply BVH algo
+        auto world = Bvh_node(scene); 
+        camera.render(world); 
+        auto currTime2 = std::chrono::high_resolution_clock::now();
+        auto duration_BVH = std::chrono::duration_cast<std::chrono::microseconds>(currTime2 - currTime1).count();
+
+        std::clog <<"ij_bound = "<<ij_bound << " brute force time: " << duration_bruteForce << " BVH time: " << duration_BVH << std::endl; 
+
     }
 
-    //renderer
-    camera.render(scene); 
-
-    // apply BVH algo
-    // auto world = Bvh_node(scene); 
-    // camera.render(world); 
-    
 }

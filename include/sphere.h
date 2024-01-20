@@ -14,6 +14,7 @@ class Sphere:public hittable {
         bool is_moving; 
         double radius; 
         std::shared_ptr<Material> mat; 
+        Aabb bbox; 
         
     public:
         // constructors 
@@ -21,23 +22,23 @@ class Sphere:public hittable {
 
         // provide two center positions for moving spheres, one center positions for static spheres 
         Sphere(const Point3<double>& t_center1, const double t_radius, const std::shared_ptr<Material> t_material):
-            center(t_center1), center_vec(Vec3<double>(0,0,0)), radius(t_radius), mat(t_material), is_moving(false) {}
+            center(t_center1), center_vec(Vec3<double>(0,0,0)), radius(t_radius), mat(t_material), is_moving(false) {
+                auto radius_vec = Vec3<double>(radius, radius, radius); 
+                bbox = Aabb(center-radius_vec, center+radius_vec); 
+            }
 
         Sphere(const Point3<double>& t_center1, const Point3<double>& t_center2, const double t_radius, const std::shared_ptr<Material> t_material): 
             center(t_center1), center_vec(t_center2 - t_center1), radius(t_radius), mat(t_material), is_moving(true) {
-                auto r_vec = Vec3<double>(t_radius, t_radius, t_radius); 
+                auto radius_vec = Vec3<double>(radius, radius, radius); 
+                bbox = Aabb(t_center1-radius_vec, t_center1+radius_vec); 
+                bbox.add(Aabb(t_center2-radius_vec, t_center2+radius_vec));
             }
         
         Point3<double> get_center() {return center; }
         double get_radius() {return radius; }
 
         Aabb bounding_box() const override {
-            // if(!is_moving){
-                auto r_vec = Vec3<double>(radius, radius, radius); 
-                return Aabb(center - r_vec, center + r_vec); 
-            // }
-            // TODO: bbox of moving objects
-            
+            return bbox; 
         }
   
 
