@@ -11,5 +11,5 @@ class Material {
     */
     public: 
     virtual ~Material() = default; 
-    virtual bool scatter(const Ray<double>& ray_in, HitRecord& rec, Color<double>& t_attenuation, Ray<double>& ray_scattered) const = 0; 
+    virtual bool scatter(const Ray& ray_in, HitRecord& rec, Color& t_attenuation, Ray& ray_scattered) const = 0; 
 }; 

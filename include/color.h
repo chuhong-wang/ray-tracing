@@ -3,14 +3,13 @@
 
 #include "vec3.h"
 #include "interval.h"
+#include "common.h"
 
-template <typename T>
-using Color = Vec3<T>;
+using Color = Vector;
 
-template <typename T>
-void write_color(std::ostream &out, Color<T> pixel_color) {
+void write_color(std::ostream &out, Color pixel_color) {
   // make sure three values in `pixel_color` fall in [0,1]
-  static const Interval intensity(0, 0.999); 
+  static const Interval2f intensity(0, 0.999); 
 
   auto r = pixel_color.x(); 
   auto g = pixel_color.y(); 

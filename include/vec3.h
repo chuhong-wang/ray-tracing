@@ -32,7 +32,7 @@ class Vec3 {
             v[2]+= v2.v[2];
             return *this; }
 
-        Vec3& operator+=(const T m) {
+        Vec3& operator+=(const float m) {
             v[0]+=m; 
             v[1]+= m; 
             v[2]+= m; 
@@ -44,7 +44,7 @@ class Vec3 {
             v[2]-= v2.v[2];
             return *this; } 
 
-        Vec3& operator-=(const T m) {
+        Vec3& operator-=(const float m) {
             *this += -m; 
             return *this; } 
         
@@ -54,15 +54,22 @@ class Vec3 {
             v[2]*= v2.v[2];
             return *this; }
 
-        Vec3& operator*=(const T m) {
+        Vec3& operator*=(const float m) {
             v[0]*= m; 
             v[1]*= m; 
             v[2]*= m; 
             return *this; }
 };
 
-template <typename T>
-using Point3 = Vec3<T>; 
+typedef Vec3<float>     Vector;  // Vector is float type by default
+typedef Vec3<float>     Vector3f;
+typedef Vec3<double>    Vector3d; 
+typedef Vec3<int>       Vector3i; 
+
+using Point3 = Vector3f; 
+using Point3f = Vector3f; 
+using Point3d = Vector3d; 
+using Point3i = Vector3i; 
 
 template <typename T>
 std::ostream& operator<<(std::ostream& os,  const Vec3<T>& v) {
@@ -86,29 +93,34 @@ inline Vec3<T> operator*(const Vec3<T>& v1, const Vec3<T>& v2) {
 }
 
 template <typename T> 
-inline Vec3<T> operator*(const Vec3<T>& v1, const T m) {
+inline Vec3<T> operator*(const Vec3<T>& v1, const float m) {
     return Vec3<T>(v1[0]*m, v1[1]*m, v1[2]*m); 
 }
+// template <typename T> 
+// inline Vec3<T> operator*(const Vec3<T>& v1, const int m) {
+//     return Vec3<T>(v1[0]*m, v1[1]*m, v1[2]*m); 
+// }
 template <typename T> 
-inline Vec3<T> operator*(const Vec3<T>& v1, const int m) {
+inline Vec3<T> operator*(const float m, const Vec3<T>& v1) {
     return Vec3<T>(v1[0]*m, v1[1]*m, v1[2]*m); 
 }
-template <typename T> 
-inline Vec3<T> operator*(const T m, const Vec3<T>& v1) {
-    return Vec3<T>(v1[0]*m, v1[1]*m, v1[2]*m); 
-}
-template <typename T> 
-inline Vec3<T> operator*(const int m, const Vec3<T>& v1) {
-    return Vec3<T>(v1[0]*m, v1[1]*m, v1[2]*m); 
-}
+// template <typename T> 
+// inline Vec3<T> operator*(const int m, const Vec3<T>& v1) {
+//     return Vec3<T>(v1[0]*m, v1[1]*m, v1[2]*m); 
+// }
 
 template <typename T> 
-inline Vec3<T> operator/(const Vec3<T>& v1, const T m) {
+inline Vec3<T> operator/(const Vec3<T>& v1, const float m) {
     return Vec3<T>(v1[0]/m, v1[1]/m, v1[2]/m); 
 }
 
 template <typename T> 
-inline Vec3<T> operator/(const T m, const Vec3<T>& v1) {
+inline Vec3<T> operator/(const Vec3<T>& v1, const double m) {
+    return Vec3<T>(v1[0]/m, v1[1]/m, v1[2]/m); 
+}
+
+template <typename T> 
+inline Vec3<T> operator/(const float m, const Vec3<T>& v1) {
     return Vec3<T>(m/v1[0], m/v1[1], m/v1[2]); 
 }
 
@@ -126,7 +138,11 @@ inline Vec3<T> cross_product(const Vec3<T>& v1, const Vec3<T>& v2) {
 
 template <typename T>
 inline Vec3<T> unit_vector(const Vec3<T>& v){
-    return v/v.length(); 
+    T len = v.length(); 
+    if(len!=0) {return v/v.length(); }
+    else {
+        std::cerr << "vector has zero length" << std::endl; 
+        return v;} 
 }
 
 // return the direction vector of a ray reflection  
@@ -137,7 +153,7 @@ inline Vec3<T> reflect(const Vec3<T> t_RayIn_direction, const Vec3<T>& t_normal)
 
 // return the direction vector of a ray refraction  
 template <typename T> 
-inline Vec3<T> refract(const Vec3<T> t_RayIn_direction_unit, const Vec3<T> t_normal, const double& t_refraction_idx){
+inline Vec3<T> refract(const Vec3<T> t_RayIn_direction_unit, const Vec3<T> t_normal, const T& t_refraction_idx){
     auto v_surfaceNormal = t_refraction_idx*(t_RayIn_direction_unit - dot_product(t_RayIn_direction_unit, t_normal)*t_normal); 
     auto v_surfaceNormal_lenSqr = v_surfaceNormal.length_square(); 
     auto v_surfaceTangent = - sqrt(1 - v_surfaceNormal_lenSqr)*t_normal; 

@@ -10,13 +10,13 @@ class Material;
 class HitRecord {
  public:
   // data members 
-  double t;          // root of quandratic formula
-  Point3<double> P;  // ray.at(t)
-  Vec3<double> normal;
+  float t;          // root of quandratic formula
+  Point3 P;  // ray.at(t)
+  Vector normal;
   bool front_face;
   std::shared_ptr<Material> material; 
-
-  void set_face_normal(Ray<double>& r_, const Vec3<double>& outward_normal) {
+  
+  void set_face_normal(Ray& r_, const Vector& outward_normal) {
     front_face = (dot_product(r_.direction(), outward_normal) <= 0.0);
     normal = front_face ? outward_normal : -outward_normal;
   }

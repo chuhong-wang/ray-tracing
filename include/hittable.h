@@ -8,11 +8,9 @@
 class hittable{
     public:
     virtual ~hittable() = default; 
-    virtual bool hit(Ray<double> ray_in,  Interval intv, HitRecord& rec_) const = 0; 
+    virtual bool hit(Ray ray_in,  Interval2f intv, HitRecord& rec_) const = 0; 
     virtual Aabb bounding_box() const = 0; 
     
     private:
     std::shared_ptr<Material> mat; 
-
-
 }; 

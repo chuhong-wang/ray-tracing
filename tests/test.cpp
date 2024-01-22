@@ -7,23 +7,23 @@
 
 int main(){
     std::cout << "testing Aabb " ; 
-    auto bbox = Aabb(Point3<double>(-2-0.2,0.2-0.2,-2-0.2), Point3<double>(-1+0.2,0.2+0.2,-2+0.2)); 
+    auto bbox = Aabb(Point3(-2-0.2,0.2-0.2,-2-0.2), Point3(-1+0.2,0.2+0.2,-2+0.2)); 
     std::cout << bbox.axis(0) << bbox.axis(1) << bbox.axis(2); 
-    auto myRay2 = Ray<double>(Point3<double>(-0.5, 0.2, 0), Vec3<double>(-1.5,0.2,-2), 0.0);
-    bool hit_aabb = bbox.hit(myRay2, Interval(0, infinity)); 
+    auto myRay2 = Ray(Point3(-0.5, 0.2, 0), Vector(-1.5,0.2,-2), 0.0);
+    bool hit_aabb = bbox.hit(myRay2, Interval<float>(0, infinity)); 
 
     std::cout << hit_aabb << std::endl; 
 
     std::cout << "testing Bvh_node" << std::endl; 
     Hittable_list scene; 
 
-    auto matrl = std::make_shared<Metal>(Color<double>(0.5, 0.5, 0.5)); 
-    // scene.add(std::make_shared<Sphere>(Point3<double>(0.0, 1.0, -1.0), 1.0, matrl));
+    auto matrl = std::make_shared<Metal>(Color(0.5, 0.5, 0.5)); 
+    // scene.add(std::make_shared<Sphere>(Point3(0.0, 1.0, -1.0), 1.0, matrl));
 
     int ij_bound = 4; 
     for (int a = -ij_bound; a<ij_bound; ++a) {
         for (int b = -ij_bound; b < ij_bound; ++b) {
-            auto center = Point3<double>(a, 0.2, b); 
+            auto center = Point3(a, 0.2, b); 
             scene.add(std::make_shared<Sphere>(center, 0.2, matrl)); 
         }    
     }
@@ -34,18 +34,18 @@ int main(){
     auto myHitRecord = HitRecord();
 
     // std::cout << "test ray1" << std::endl; 
-    // auto myRay1 = Ray<double>(Point3<double>(0, 0, 0), Vec3<double>(100,100,1), 0.0);
+    // auto myRay1 = Ray(Point3(0, 0, 0), Vec3(100,100,1), 0.0);
     // auto res1 = node.hit(myRay1,Interval(0, infinity), myHitRecord); 
     // std::cout << res1 << std::endl; 
 
-    // auto myRay2 = Ray<double>(Point3<double>(0, 0, 0), Vec3<double>(0,1,-1), 0.0);
+    // auto myRay2 = Ray(Point3(0, 0, 0), Vec3(0,1,-1), 0.0);
     std::cout << "test ray2" << std::endl; 
-    auto res2 = node.hit(myRay2,Interval(0, infinity), myHitRecord); 
+    auto res2 = node.hit(myRay2,Interval<float>(0, infinity), myHitRecord); 
 
     std::cout << res2 <<"record: "<<myHitRecord.P << std::endl; 
 
     myHitRecord = HitRecord();
-    auto res3 = scene.hit(myRay2, Interval(0, infinity), myHitRecord); 
+    auto res3 = scene.hit(myRay2, Interval<float>(0, infinity), myHitRecord); 
     std::cout << res3 <<"record: "<<myHitRecord.P << std::endl; 
     return 0; 
 }

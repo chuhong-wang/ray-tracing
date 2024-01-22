@@ -43,7 +43,7 @@ class Bvh_node: public hittable {
             bbox.add(right->bounding_box());
         }
 
-        bool hit(Ray<double> ray_in,  Interval intv, HitRecord& rec_) const override {
+        bool hit(Ray ray_in,  Interval2f intv, HitRecord& rec_) const override {
             if(bbox.hit(ray_in, intv)){
                 bool left_hit = left->hit(ray_in, intv, rec_);
                 if(left_hit) {intv.update_max(rec_.t); }

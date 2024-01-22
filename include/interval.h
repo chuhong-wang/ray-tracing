@@ -1,31 +1,30 @@
 #pragma once 
 #include <ostream>
+
+template <typename T> 
 class Interval {
     public:
-        double min; 
-        double max;
+        T min; 
+        T max;
         
-        Interval(double _min, double _max): min(_min), max(_max) {}
+        Interval(T _min, T _max): min(_min), max(_max) {}
 
-        // double upperbound() {return max; }
-        // double lowerbound() {return min; }
-
-        bool contains(double x) {
+        bool contains(T x) {
             if(x<=min || x >=max) {return false;}
             else {return true; }
         }
-        bool surrounds(double x) {
+        bool surrounds(T x) {
             if(x<min || x >max) {return false;}
             else {return true; }
         }
-        double clamp(double x) const {
+        T clamp(T x) const {
             if(x < min) {return min; }
             else if(x > max) {return max; }
             else {return x;} 
         }
 
-        void update_max(double m){ max = m; }
-        void update_min(double m){ min = m; }
+        void update_max(T m){ max = m; }
+        void update_min(T m){ min = m; }
 
         void combine(const Interval& intv2){
             update_min(fmin(min, intv2.min)); 
@@ -33,7 +32,10 @@ class Interval {
         }
 }; 
 
-std::ostream& operator<<(std::ostream&os, const Interval& intv){
+typedef Interval<float> Interval2f; 
+typedef Interval<double> Interval2d; 
+
+std::ostream& operator<<(std::ostream&os, const Interval2f& intv){
     os<<"(" <<intv.min<<", "<<intv.max <<")" << std::endl; 
     return os; 
 }
