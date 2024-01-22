@@ -62,10 +62,10 @@ int main() {
     }
 
     //renderer
-    camera.render(scene); 
+    // camera.render(scene); 
 
     // apply BVH algo
-    // auto world = Bvh_node(scene); 
-    // camera.render(world); 
+    auto world = Bvh_node(scene); 
+    camera.render(world); 
     
 }

@@ -35,7 +35,3 @@ class Interval {
 typedef Interval<float> Interval2f; 
 typedef Interval<double> Interval2d; 
 
-std::ostream& operator<<(std::ostream&os, const Interval2f& intv){
-    os<<"(" <<intv.min<<", "<<intv.max <<")" << std::endl; 
-    return os; 
-}

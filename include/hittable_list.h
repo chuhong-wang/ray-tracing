@@ -1,11 +1,10 @@
 #pragma once
 
 #include <vector>
-#include <memory> 
+#include <memory>
 
 #include "hittable.h"
 
-using std::shared_ptr; 
 
 class Hittable_list:public hittable {
     private:
@@ -15,37 +14,16 @@ class Hittable_list:public hittable {
     public:
     // constructor
     Hittable_list() = default; 
-    Hittable_list(shared_ptr<hittable> obj_ptr) { add(obj_ptr); }
+    Hittable_list(std::shared_ptr<hittable> obj_ptr);
 
-    void add(shared_ptr<hittable> obj_ptr){ 
-        obj_ptrs.push_back(obj_ptr); 
-    }
+    void add(std::shared_ptr<hittable> obj_ptr); 
 
     // member function 
-    bool hit(Ray ray_, Interval2f intv, HitRecord& rec) const override {
-        bool hit_something = false; 
-        // scan all the objects and determine the smallest t hittable
-        for (auto obj:obj_ptrs){
-            if (obj->hit(ray_, intv, rec)){
-                hit_something = true; 
-                intv.update_max(rec.t); 
-            }
-        }
-        return hit_something; 
-    }
+    bool hit(Ray ray_, Interval2f intv, HitRecord& rec) const override; 
 
-    size_t size() const {
-        return obj_ptrs.size(); }
+    size_t size() const; 
 
-    std::vector<std::shared_ptr<hittable>> get_objects() const {
-        return obj_ptrs; 
-    }
+    std::vector<std::shared_ptr<hittable>> get_objects() const ; 
     
-    Aabb bounding_box() const override {
-        Aabb bbox; 
-        for (auto obj_ptr:obj_ptrs){
-            bbox.add(obj_ptr->bounding_box()); 
-        }
-        return bbox; 
-    }
+    Aabb bounding_box() const override; 
 }; 
