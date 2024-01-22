@@ -148,7 +148,7 @@ inline Vec3<T> unit_vector(const Vec3<T>& v){
 // return the direction vector of a ray reflection  
 template <typename T>
 inline Vec3<T> reflect(const Vec3<T> t_RayIn_direction, const Vec3<T>& t_normal){
-    return t_RayIn_direction - 2*dot_product(t_RayIn_direction, t_normal)*t_normal; 
+    return t_RayIn_direction - 2.0f*dot_product(t_RayIn_direction, t_normal)*t_normal; 
 }
 
 // return the direction vector of a ray refraction  

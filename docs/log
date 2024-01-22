@@ -1,0 +1,12 @@
+Math 
+ - anti-aliasing (random sampling neighbor pixels)
+ - reflection and refraction
+  - snell's law
+  - total internal refraction (TIR) 
+  - Fresnel equation to calculate refraction and transmisson 
+ - if a vector pass through a bounding box
+
+architecture 
+ - abstract class: hittable, material
+ - BVH 
+  - shared_ptr to object -> calling different hit(...) functions  

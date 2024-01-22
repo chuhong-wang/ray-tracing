@@ -57,18 +57,37 @@ TEST(RayTracerTest, SphereIntersection2) {
 #include "dielectric.h"
 #include "gtest/gtest.h"
 
-TEST(RayTracerTest, MaterialReflection){
-    Ray myRay(Point3(0.0,1.0,-2.0), Vector(0, 0, 1), 0);
+TEST(RayTracerTest, DiffuseMaterial){
+    auto orig = Point3(0.0,0.5,-2.0); 
+    auto p = Point3(0.8, 0.5, 0.668338); 
+
+    Ray myRay(orig, p-orig, 0);
     HitRecord hitrecord;
-    hitrecord.normal = unit_vector(Vector(2, -1, 3));
-    hitrecord.P = Point3(0.8, 0.5, 0.668338); 
+    hitrecord.normal = unit_vector(Vector(0.8, -0.5, 0.668338-1));
+    hitrecord.P = p; 
     hitrecord.front_face = true; 
 
     Color attenuation; Ray ray_scattered; 
     auto matrl = Lambertian(Color(0.5, 0.5, 0.5)); 
     bool scatter_res = matrl.scatter(myRay, hitrecord, attenuation, ray_scattered);
-
-    
     ASSERT_GE(dot_product(ray_scattered.direction(), hitrecord.normal), 0.0f); 
-    
+}
+
+TEST(RayTracerTest, ReflectiveMaterial){
+    auto orig = Point3(0.0,0.5,-2.0); 
+    auto p = Point3(0.8, 0.5, 0.668338); 
+    Ray myRay(orig, p-orig, 0);
+    HitRecord hitrecord;
+    hitrecord.normal = unit_vector(Vector(-1, -2, -3));
+    hitrecord.P = p; 
+    hitrecord.front_face = true; 
+
+    Color attenuation; Ray ray_scattered; 
+    auto matrl = Metal(Color(0.5, 0.5, 0.5), 0.0); 
+    bool scatter_res = matrl.scatter(myRay, hitrecord, attenuation, ray_scattered);
+
+    auto ref = myRay.direction()-2.0f*dot_product(myRay.direction(), hitrecord.normal)*hitrecord.normal;
+    ASSERT_NEAR(dot_product(ray_scattered.direction(), ref)
+        /(ray_scattered.direction().length()*ref.length()), 
+        1.0f, zeroTolerence); 
 }
